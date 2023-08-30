@@ -87,10 +87,11 @@ class ApartmentController extends Controller {
         // Handle image upload and storage
         if ($request->hasFile('images')) {
             $images = [];
+            $counter = 1;
 
             foreach ($request->file('images') as $imageFile) {
                 $extension = $imageFile->getClientOriginalExtension();
-                $imageName = "{$newApartment->id}-" . Str::slug($newApartment->name) . ".{$extension}";
+                $imageName = "{$newApartment->id}-" . Str::slug($newApartment->name) . "_{$counter}" . ".{$extension}";
                 // Store the image in the "public" disk (you can configure this in config/filesystems.php)
                 $imagePath = $imageFile->storeAs('apartment_images', $imageName, 'public');
 
@@ -98,6 +99,7 @@ class ApartmentController extends Controller {
                     'image_path' => $imagePath,
                     'is_cover' => false,
                 ];
+                $counter++;
             }
 
             // Associate images with the apartment
