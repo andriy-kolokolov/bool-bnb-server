@@ -32,12 +32,21 @@
 
             <div class="form-group">
                 <label>Services:</label><br>
-                @foreach ($services as $service)
-                    <label class="checkbox-inline">
-                        <input type="checkbox" name="services[]" value="{{ $service['id'] }}">
-                        <i class="{{ $service['icon'] }}"></i> {{ $service['name'] }}
-                    </label><br>
-                @endforeach
+                <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
+                    @foreach ($services as $service)
+                        <div class="p-3 col d-flex justify-content-center">
+                            <label class="checkbox-inline d-flex flex-row justify-content-start ms-checkbox-label">
+                                <input type="checkbox" name="services[]" value="{{ $service['id'] }}" class="h-100 d-flex align-items-center ms-custom-checkbox">
+                                <span class="ms-3 ms-icon-wrap d-flex align-items-center">
+                                    <i class="fs-icon {{ $service['icon'] }}"></i>
+                                    <span class="ms-3 name">
+                                        {{ $service['name'] }}
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
             </div>
 
             <div class="form-group">

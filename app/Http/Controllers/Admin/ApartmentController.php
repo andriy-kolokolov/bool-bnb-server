@@ -106,13 +106,12 @@ class ApartmentController extends Controller {
             $newApartment->images()->createMany($images);
         }
 
-
-        return redirect()->route('admin.apartments.show', ['apartment' => $newApartment]);
+        return redirect()->route('admin.apartments.index', ['apartment' => $newApartment]);
     }
 
 
-    public function show($slug) {
-        $apartment = Apartment::where('slug', $slug)->firstOrFail();
+    public function show($id) {
+        $apartment = Apartment::where('id', $id)->firstOrFail();
         return view('admin.apartments.show', compact('apartment'));
     }
 
