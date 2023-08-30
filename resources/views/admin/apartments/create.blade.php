@@ -21,13 +21,12 @@
             </div>
 
             <div class="form-group">
-                <label for="rooms">Rooms:</label>
-                <input type="number" class="form-control" id="rooms" name="rooms" required>
-            </div>
-
-            <div class="form-group">
-                <label for="beds">Beds:</label>
-                <input type="number" class="form-control" id="beds" name="beds" required>
+                <label for="street">Street:</label>
+                <input type="text" id="street" class="form-control" name="street" placeholder="Street" required>
+                <label for="city">City:</label>
+                <input type="text" id="city" class="form-control" name="city" placeholder="City" required>
+                <label for="zip">ZIP:</label>
+                <input type="text" id="zip" class="form-control" name="zip" placeholder="ZIP" required>
             </div>
 
             <div class="form-group">
@@ -36,7 +35,8 @@
                     @foreach ($services as $service)
                         <div class="p-3 col d-flex justify-content-center">
                             <label class="checkbox-inline d-flex flex-row justify-content-start ms-checkbox-label">
-                                <input type="checkbox" name="services[]" value="{{ $service['id'] }}" class="h-100 d-flex align-items-center ms-custom-checkbox">
+                                <input type="checkbox" name="services[]" value="{{ $service['id'] }}"
+                                       class="h-100 d-flex align-items-center ms-custom-checkbox">
                                 <span class="ms-3 ms-icon-wrap d-flex align-items-center">
                                     <i class="fs-icon {{ $service['icon'] }}"></i>
                                     <span class="ms-3 name">
@@ -50,6 +50,16 @@
             </div>
 
             <div class="form-group">
+                <label for="rooms">Rooms:</label>
+                <input type="number" class="form-control" id="rooms" name="rooms" required>
+            </div>
+
+            <div class="form-group">
+                <label for="beds">Beds:</label>
+                <input type="number" class="form-control" id="beds" name="beds" required>
+            </div>
+
+            <div class="form-group">
                 <label for="bathrooms">Bathrooms:</label>
                 <input type="number" class="form-control" id="bathrooms" name="bathrooms" required>
             </div>
@@ -60,14 +70,7 @@
             </div>
 
             <div class="form-group">
-                <label>Address:</label>
-                <input type="text" class="form-control" name="street" placeholder="Street" required>
-                <input type="text" class="form-control" name="zip" placeholder="ZIP" required>
-                <input type="text" class="form-control" name="city" placeholder="City" required>
-            </div>
-
-            <div class="form-group">
-                <label for="images">Upload Images (max 5):</label>
+                <label for="images">Upload Images (min 5):</label>
                 <input type="file" class="form-control-file" id="images" name="images[]" accept="image/*" multiple
                        required>
             </div>

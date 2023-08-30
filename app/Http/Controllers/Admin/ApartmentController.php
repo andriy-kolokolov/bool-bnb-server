@@ -37,8 +37,7 @@ class ApartmentController extends Controller {
         'min' => 'Field :attribute must have min :min chars.',
     ];
 
-    public function index()
-    {
+    public function index() {
         $apartments = Apartment::all();
 
         return view('admin.apartments.index', compact('apartments'));
@@ -96,10 +95,18 @@ class ApartmentController extends Controller {
                 // Store the image in the "public" disk (you can configure this in config/filesystems.php)
                 $imagePath = $imageFile->storeAs('apartment_images', $imageName, 'public');
 
-                $images[] = [
-                    'image_path' => $imagePath,
-                    'is_cover' => false,
-                ];
+                if ($counter == 1) {
+                    $images[] = [
+                        'image_path' => $imagePath,
+                        'is_cover' => true,
+                    ];
+                } else {
+                    $images[] = [
+                        'image_path' => $imagePath,
+                        'is_cover' => false,
+                    ];
+                }
+
                 $counter++;
             }
 
@@ -117,44 +124,75 @@ class ApartmentController extends Controller {
     }
 
 
-    public function edit($slug) {
-        $apartment = Apartment::where('slug', $slug)->firstOrFail();
+    public function edit($id) {
+        $apartment = Apartment::with('address', 'user', 'services', 'images')->find($id);
         $services = Service::all();
-        $images = Image::all();
-        $addresses = Address::all();
-        $views = View::all();
-        $sponsorships = Sponsorship::all();
-        return view('admin.apartments.edit', compact('apartment', 'utilities', 'images', 'addresses', 'views', 'sponsors'));
+        return view('admin.apartments.edit', compact('apartment', 'services'));
     }
 
 
-    public function update(Request $request, $slug) {
-        $apartment = Apartment::where('slug', $slug)->firstOrFail();
+    public function update(Request $request, int $id) {
+        $apartment = Apartment::findOrFail($id);
+
         $request->validate($this->validations, $this->validations_messages);
-        $data = $request->all();
+        $validatedData = $request->all();
 
-        // if ($request->has('image_id')) {
-        //     $imagePath = Storage::disk('public')->put('uploads', $data['image_id']);
-        //     if ($apartment->image_id) {
-        //         Storage::delete($apartment->image_id);
-        //     }
-        //     $apartment->image_id = $imagePath;
-        // }
+        $apartment->update([
+            'name' => $validatedData['name'],
+            'slug' => Str::slug($validatedData['name']),
+            'rooms' => $validatedData['rooms'],
+            'beds' => $validatedData['beds'],
+            'bathrooms' => $validatedData['bathrooms'],
+            'square_meters' => $validatedData['square_meters'],
+        ]);
 
-        $apartment->title = $data['title'];
-        $apartment->address_id = $data['address_id'];
-        $apartment->user_id = $data['user_id'];
-        $apartment->rooms = $data['rooms'];
-        $apartment->beds = $data['beds'];
-        $apartment->bathrooms = $data['bathrooms'];
-        $apartment->square_meters = $data['square_meters'];
-        $apartment->available = $data['available'];
-        $apartment->update();
+        if ($validatedData['services']) {
+            $services = array_values($validatedData['services']);
 
-        $apartment->services()->sync($data['services'] ?? []);
-        $apartment->sponsors()->sync($data['sponsors'] ?? []);
+            $apartment->services()->sync($services);
+        }
 
-        return redirect()->route('admin.apartments.show', ['apartment' => $apartment]);
+        $apartment->address()->update([
+            'street' => $validatedData['street'],
+            'city' => $validatedData['city'],
+            'zip' => $validatedData['zip'],
+        ]);
+
+        // Handle image updates
+        if ($request->hasFile('images')) {
+            // Remove existing images, if needed
+            $apartment->images()->delete();
+
+            // Process and store new images
+            $images = [];
+            $counter = 1;
+
+            foreach ($request->file('images') as $imageFile) {
+                $extension = $imageFile->getClientOriginalExtension();
+                $imageName = "{$apartment->id}-" . Str::slug($apartment->name) . "_{$counter}" . ".{$extension}";
+                $imagePath = $imageFile->storeAs('apartment_images', $imageName, 'public');
+
+                if ($counter == 1) {
+                    $images[] = [
+                        'image_path' => $imagePath,
+                        'is_cover' => true,
+                    ];
+                } else {
+                    $images[] = [
+                        'image_path' => $imagePath,
+                        'is_cover' => false,
+                    ];
+                }
+
+                $counter++;
+            }
+
+            // Associate images with the apartment
+            $apartment->images()->createMany($images);
+        }
+
+        return redirect()->route('admin.apartments.index')->with('success', 'Apartment updated successfully');
+
     }
 
 
