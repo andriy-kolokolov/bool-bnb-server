@@ -1,7 +1,11 @@
+@php
+    $user = Auth::user();
+@endphp
+
 <header class="shadow mb-4 admin-header container-fluid d-flex justify-content-between">
 	<div class="header-brand">
 		<a href="{{ route('admin.dashboard') }}">
-			<img class="img-logo" src="{{ asset('storage/uploads/logo-orizzontale.png') }}" alt="Logo"
+			<img class="img-logo" src="{{ asset('logo-orizzontale.png') }}" alt="Logo"
 				style="max-width: 150px; padding: 1rem;">
 		</a>
 	</div>
@@ -17,7 +21,7 @@
 				<!--    ADMIN PROFILE EDIT    -->
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						{{ $user->username }}
+						{{ $user->name }}
 					</a>
 					<ul class="dropdown-menu dropdown-menu-end  text-center">
 						<li>

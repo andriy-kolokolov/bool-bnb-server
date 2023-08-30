@@ -1,20 +1,44 @@
 @extends('auth.layouts.base')
 
 @section('contents')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form method="post" action="{{ route('register') }}">
         @csrf
 
         <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
+            <label for="name" class="form-label">Name</label>
             <input
                 type="text"
                 class="form-control"
-                id="username"
-                name="username"
+                id="name"
+                name="name"
                 required
                 autofocus
-                autocomplete="username"
-                value="{{ old('username') }}"
+                autocomplete="name"
+                value="{{ old('name') }}"
+            >
+        </div>
+
+        <div class="mb-3">
+            <label for="last_name" class="form-label">Last Name</label>
+            <input
+                type="text"
+                class="form-control"
+                id="last_name"
+                name="last_name"
+                required
+                autofocus
+                autocomplete="last_name"
+                value="{{ old('last_name') }}"
             >
         </div>
 

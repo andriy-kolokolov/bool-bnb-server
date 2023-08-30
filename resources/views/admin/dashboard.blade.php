@@ -5,7 +5,7 @@
 @section('contents')
 	<div class="w-75 m-auto text-center d-flex flex-column align-items-center">
 		<h1 class="page-title fw-bold mt-4">
-			Welcome {{ $user->username }}!
+			Welcome {{ $user->name }}!
 		</h1>
 		<h4 class="mt-5">Use the buttons below to add a new apartment</h4>
 		<h4>or to view a list of the ones you already added:</h4>
