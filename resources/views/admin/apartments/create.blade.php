@@ -3,6 +3,15 @@
 @section('content')
     <div class="container">
         <h2>Create Apartment</h2>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form action="{{ route('admin.apartments.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
@@ -25,8 +34,8 @@
                 <label>Services:</label><br>
                 @foreach ($services as $service)
                     <label class="checkbox-inline">
-                        <input type="checkbox" name="services[]" value="{{ $service['name'] }}">
-                        <i class="fas {{ $service['icon'] }}"></i> {{ $service['name'] }}
+                        <input type="checkbox" name="services[]" value="{{ $service['id'] }}">
+                        <i class="{{ $service['icon'] }}"></i> {{ $service['name'] }}
                     </label><br>
                 @endforeach
             </div>
@@ -50,7 +59,8 @@
 
             <div class="form-group">
                 <label for="images">Upload Images (max 5):</label>
-                <input type="file" class="form-control-file" id="images" name="images[]" accept="image/*" multiple required>
+                <input type="file" class="form-control-file" id="images" name="images[]" accept="image/*" multiple
+                       required>
             </div>
 
             <button type="submit" class="btn btn-primary">Create Apartment</button>

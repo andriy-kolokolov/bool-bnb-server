@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\ApartmentController;
+use App\Http\Controllers\Admin\ApartmentController as AdminApartmentController;
+use App\Http\Controllers\Api\ApartmentController as ApiApartmentController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,29 +19,29 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('apartments')->group(function () {
     // CRUDS
     // retrieve all apartments // http://127.0.0.1:8000/api/apartments/all
-    Route::get('/', [ApartmentController::class, 'index']);
+    Route::get('/', [ApiApartmentController::class, 'index']);
     //  retrieve apartment by id  http://127.0.0.1:8000/api/apartments/{id}
-    Route::get('/{id}', [ApartmentController::class, 'show']);
+    Route::get('/{id}', [ApiApartmentController::class, 'show']);
     //  add apartment // method POST http://127.0.0.1:8000/api/apartments/
-    Route::post('/', [ApartmentController::class, 'store']);
+    Route::post('/', [ApiApartmentController::class, 'store']);
     //  update apartment // method PUT http://127.0.0.1:8000/api/apartments/{id}
-    Route::put('/{id}', [ApartmentController::class, 'update']);
+    Route::put('/{id}', [ApiApartmentController::class, 'update']);
     //  delete apartment // method DELETE http://127.0.0.1:8000/api/apartments/{id}
-    Route::delete('/{id}', [ApartmentController::class, 'destroy']);
+    Route::delete('/{id}', [ApiApartmentController::class, 'destroy']);
 
 
 
     //  retrieve apartments images // http://127.0.0.1:8000/api/apartments/{id}/images
-    Route::get('/{id}/images', [ApartmentController::class, 'getImages']);
+    Route::get('/{id}/images', [ApiApartmentController::class, 'getImages']);
     // retrieve all services related to apartment // http://127.0.0.1:8000/api/apartments/{id}/services
-    Route::get('/{id}/services', [ApartmentController::class, 'getServices']);
+    Route::get('/{id}/services', [ApiApartmentController::class, 'getServices']);
     //  retrieve apartments views // http://127.0.0.1:8000/api/apartments/{id}/views
-    Route::get('/{id}/views', [ApartmentController::class, 'getViews']);
+    Route::get('/{id}/views', [ApiApartmentController::class, 'getViews']);
     //  retrieve apartments images // http://127.0.0.1:8000/api/apartments/{id}/messages
-    Route::get('/{id}/messages', [ApartmentController::class, 'getMessages']);
+    Route::get('/{id}/messages', [ApiApartmentController::class, 'getMessages']);
     //  retrieve apartments ordered by availability // http://127.0.0.1:8000/api/apartments/ordered-by-availability
-    Route::get('/ordered-by-availability', [ApartmentController::class, 'getAllOrderedByAvailability']);
+    Route::get('/ordered-by-availability', [ApiApartmentController::class, 'getAllOrderedByAvailability']);
     //  retrieve apartments ordered by sponsor // http://127.0.0.1:8000/api/apartments/ordered-by-sponsorship
-    Route::get('/ordered-by-sponsorship', [ApartmentController::class, 'getAllOrderedBySponsorship']);
+    Route::get('/ordered-by-sponsorship', [ApiApartmentController::class, 'getAllOrderedBySponsorship']);
 });
 

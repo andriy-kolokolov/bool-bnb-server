@@ -12,33 +12,29 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ApartmentController extends Controller {
-    private $validations = [
+    private array $validations = [
         'name' => 'required|string|max:200',
-        'rooms' => 'required|integer',
-        'beds' => 'required|integer',
-        'bathrooms' => 'required|integer',
-        'square_meters' => 'required|integer',
-        'is_available' => 'required|boolean',
-        'is_sponsored' => 'required|boolean',
-        'user.id' => 'required|exists:users,id',
-        'address' => 'required|array',
+        'rooms' => 'required|integer|min:1',
+        'beds' => 'required|integer|min:1',
+        'bathrooms' => 'required|integer|min:1',
+        'square_meters' => 'required|integer|min:1',
+        'address' => 'array',
         'address.*.street' => 'required|string|max:200',
         'address.*.city' => 'required|string|max:100',
         'address.*.zip' => 'required|string|max:10',
         'services' => 'array',
-        'services.*.name' => 'required|max:70',
-        'services.*.icon' => 'max:100',
         'images' => 'array',
         'images.*.image_path' => 'string',
         'images.*.is_cover' => 'required|boolean',
     ];
 
     private $validations_messages = [
-        'required' => 'Il campo :attribute è obbligatorio.',
-        'max' => 'Il campo :attribute deve avere al massimo :max caratteri.',
-        'exists' => 'Valore non valido.',
+        'required' => 'Field :attribute is required.',
+        'max' => 'Field :attribute must have max :max chars.',
+        'min' => 'Field :attribute must have min :min chars.',
     ];
 
     public function index() {
@@ -55,63 +51,57 @@ class ApartmentController extends Controller {
 
     public function store(Request $request) {
 
-//        dd($request);
+        $user = Auth::user();
+
+        //        dd($request);
         $request->validate($this->validations, $this->validations_messages);
-        $data = $request->all();
-        $coverImageIndex = $request->input('cover_image_index', -1);
+        $validatedData = $request->all();
 
         // Salvare i dati nel database per gli apartment
         $newApartment = new apartment();
-        $newApartment->title = $data['title'];
-        $newApartment->user_id = auth()->user()->id;
-        $newApartment->sponsor_id = $data['sponsor_id'];
-        $newApartment->slug = apartment::slugger($data['title']);
-        $newApartment->rooms = $data['rooms'];
-        $newApartment->beds = $data['beds'];
-        $newApartment->bathrooms = $data['bathrooms'];
-        $newApartment->square_meters = $data['square_meters'];
-        $newApartment->available = $data['available'];
+        $newApartment->name = $validatedData['name'];
+        $newApartment->user_id = $user->id;
+        $newApartment->rooms = $validatedData['rooms'];
+        $newApartment->beds = $validatedData['beds'];
+        $newApartment->bathrooms = $validatedData['bathrooms'];
+        $newApartment->square_meters = $validatedData['square_meters'];
         $newApartment->save();
 
-        $newApartment->utilities()->sync($data['utilities'] ?? []);
+        if ($request->has('services')) {
+            $selectedServiceNames = $validatedData['services'];
+            $selectedServiceIds = Service::whereIn('name', $selectedServiceNames)->pluck('id')->toArray();
+            // Sync the selected services with the apartment
+            $newApartment->services()->sync($selectedServiceIds);
+        }
 
         // istanza per gli address
 
         $newAddress = new Address();
-        $newAddress->address = $data['address'];
-        $newAddress->latitude = $data['latitude'];
-        $newAddress->longitude = $data['longitude'];
+        $newAddress->street = $validatedData['street'];
+        $newAddress->city = $validatedData['city'];
+        $newAddress->zip = $validatedData['zip'];
 
         $newAddress->apartment()->associate($newApartment);
         $newAddress->save();
 
-        // istanza per le image
+        // Handle image upload and storage
+        if ($request->hasFile('images')) {
+            $images = [];
 
-        foreach ($request->file('images') as $index => $imageFile) {
-            $newImage = new Image();
-            $newImage->name = $imageFile->getClientOriginalName();
+            foreach ($request->file('images') as $imageFile) {
+                $extension = $imageFile->getClientOriginalExtension();
+                $imageName = "{$newApartment->id}-" . Str::slug($newApartment->name) . ".{$extension}";
+                // Store the image in the "public" disk (you can configure this in config/filesystems.php)
+                $imagePath = $imageFile->storeAs('apartment_images', $imageName, 'public');
 
-            // Imposta il valore di 'cover_image' in base all'indice selezionato
-            $newImage->cover_image = $index === (int)$coverImageIndex;
-
-            // Esegui la logica per salvare l'immagine e associarla all'appartamento
-            $newImage->apartment()->associate($newApartment);
-
-            // Salva fisicamente l'immagine nel percorso desiderato
-            $imagePath = $newImage->id . '_' . $imageFile->getClientOriginalName();
-            $imageFile->storeAs('uploads', $imagePath); // Rimuovi 'uploads/' dal percorso
-
-            // Assegna l'URL dell'immagine (senza il percorso completo)
-            $newImage->url = $imagePath;
-
-            $newImage->save();
-
-            // Se questa immagine è selezionata come immagine di copertina, aggiorna tutte le altre immagini
-            if ($newImage->cover_image) {
-                Image::where('apartment_id', $newApartment->id)
-                    ->where('id', '!=', $newImage->id)
-                    ->update(['cover_image' => false]);
+                $images[] = [
+                    'image_path' => $imagePath,
+                    'is_cover' => false,
+                ];
             }
+
+            // Associate images with the apartment
+            $newApartment->images()->createMany($images);
         }
 
 

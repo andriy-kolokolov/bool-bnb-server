@@ -318,7 +318,7 @@ class ApartmentsTableSeeder extends Seeder
         ];
 
         foreach ($apartmentsData as $apartmentData) {
-            
+
             $apartment = Apartment::create([
                 'name'          => $apartmentData['name'],
                 'rooms'         => $apartmentData['rooms'],
