@@ -115,13 +115,6 @@ class ApartmentController extends Controller
     }
 
 
-    public function show($id)
-    {
-        $apartment = Apartment::where('id', $id)->firstOrFail();
-        return view('admin.apartments.show', compact('apartment'));
-    }
-
-
     public function edit($slug)
     {
         $apartment = Apartment::where('slug', $slug)->firstOrFail();
@@ -172,46 +165,5 @@ class ApartmentController extends Controller
         $apartment->delete();
 
         return to_route('admin.apartments.index')->with('delete_success', $apartment);
-    }
-
-    public function restore($slug)
-    {
-        $apartment = Apartment::find($slug);
-        Apartment::withTrashed()->where('slug', $slug)->restore();
-        $apartment = Apartment::where('slug', $slug)->firstOrFail();
-
-
-        return to_route('admin.apartments.trashed')->with('restore_success', $apartment);
-    }
-
-    public function cancel($slug)
-    {
-        $apartment = Apartment::find($slug);
-        Apartment::withTrashed()->where('slug', $slug)->restore();
-        $apartment = Apartment::where('slug', $slug)->firstOrFail();
-
-
-        return to_route('admin.apartments.index')->with('cancel_success', $apartment);
-    }
-
-    public function trashed()
-    {
-        $trashedApartments = Apartment::onlyTrashed()->paginate(5);
-
-        return view('admin.apartments.trashed', compact('trashedApartments'));
-    }
-
-    public function harddelete($slug)
-    {
-        $apartment = Apartment::withTrashed()->where('slug', $slug)->first();
-
-        if ($apartment->file) {
-            Storage::delete($apartment->file);
-        }
-        // se ho il trashed lo inserisco nel harddelete
-
-        $apartment->utilities()->detach();
-        $apartment->forceDelete();
-        return to_route('admin.apartments.trashed')->with('delete_success', $apartment);
     }
 }
