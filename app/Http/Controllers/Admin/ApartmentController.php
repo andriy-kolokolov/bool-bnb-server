@@ -120,49 +120,44 @@ class ApartmentController extends Controller {
 
 
     public function show($slug) {
-        $apartment = Apartment::where('slug', $slug)->firstOrFail();
-        return view('admin.apartments.show', compact('apartment'));
+        // $apartment = Apartment::where('slug', $slug)->firstOrFail();
+        // return view('admin.apartments.show', compact('apartment'));
     }
 
 
-    public function edit($slug) {
-        $apartment = Apartment::where('slug', $slug)->firstOrFail();
+    public function edit($id) {
+        $apartment = Apartment::findOrFail($id);
         $services = Service::all();
         $images = Image::all();
         $addresses = Address::all();
-        $views = View::all();
-        $sponsorships = Sponsorship::all();
-        return view('admin.apartments.edit', compact('apartment', 'utilities', 'images', 'addresses', 'views', 'sponsors'));
+        return view('admin.apartments.edit', compact('apartment', 'images', 'addresses', 'services'));
     }
 
 
-    public function update(Request $request, $slug) {
-        $apartment = Apartment::where('slug', $slug)->firstOrFail();
-        $request->validate($this->validations, $this->validations_messages);
-        $data = $request->all();
+    public function update(Request $id) {
+        $apartment = Apartment::findOrFail($id);
+        $id->validate($this->validations, $this->validations_messages);
+        $data = $id->all();
 
-        // if ($request->has('image_id')) {
-        //     $imagePath = Storage::disk('public')->put('uploads', $data['image_id']);
-        //     if ($apartment->image_id) {
-        //         Storage::delete($apartment->image_id);
-        //     }
-        //     $apartment->image_id = $imagePath;
-        // }
+        if ($id->has('image_id')) {
+            $imagePath = Storage::disk('public')->put('uploads', $data['image_id']);
+            if ($apartment->image_id) {
+                Storage::delete($apartment->image_id);
+            }
+            $apartment->image_id = $imagePath;
+        }
 
-        $apartment->title = $data['title'];
-        $apartment->address_id = $data['address_id'];
-        $apartment->user_id = $data['user_id'];
+        $apartment->name = $data['title'];
+        $apartment->address = $data['address'];
         $apartment->rooms = $data['rooms'];
         $apartment->beds = $data['beds'];
         $apartment->bathrooms = $data['bathrooms'];
         $apartment->square_meters = $data['square_meters'];
-        $apartment->available = $data['available'];
         $apartment->update();
 
         $apartment->services()->sync($data['services'] ?? []);
-        $apartment->sponsors()->sync($data['sponsors'] ?? []);
 
-        return redirect()->route('admin.apartments.show', ['apartment' => $apartment]);
+        return redirect()->route('admin.apartments.index', ['apartment' => $apartment]);
     }
 
 
