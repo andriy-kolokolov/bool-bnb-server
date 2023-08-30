@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\ApartmentController as AdminApartmentController;
+
 use App\Http\Controllers\Api\ApartmentController as ApiApartmentController;
-use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
