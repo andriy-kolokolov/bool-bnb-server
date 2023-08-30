@@ -24,7 +24,7 @@ Route::middleware(['auth', 'verified'])
     ->prefix('admin')
     ->group(function () {
         Route::get('/', [AdminPageController::class, 'dashboard'])->name('dashboard');
-        Route::resource('apartment', ApartmentController::class);
+        Route::resource('apartments', ApartmentController::class);
     });
 
 Route::middleware('auth')->group(function () {

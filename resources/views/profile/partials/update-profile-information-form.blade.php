@@ -1,3 +1,5 @@
+@php $user = Auth::user() @endphp
+
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
@@ -17,9 +19,9 @@
         @method('patch')
 
         <div class="mb-4">
-            <x-input-label for="username" :value="__('Username')" />
-            <x-text-input id="username" name="username" type="text" class="form-control" :value="old('username', $user->username)" required autofocus autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('username')" />
+            <x-input-label for="name" :value="__('Name')" />
+            <x-text-input id="name" name="name" type="text" class="form-control" :value="old('name', $user->name)" required autofocus autocomplete="username" />
+            <x-input-error class="mt-2" :messages="$errors->get('Name')" />
         </div>
 
         <div class="mb-4">

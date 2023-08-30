@@ -14,9 +14,9 @@
 
     @include('admin.includes.header')
 
-    <main class="main-container">
+    <main class="main-container mb-5">
         <div class="container-fluid">
-            @yield('contents')
+            @yield('content')
         </div>
     </main>
 

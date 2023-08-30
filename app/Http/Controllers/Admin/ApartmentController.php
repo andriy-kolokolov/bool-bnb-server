@@ -13,70 +13,64 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class ApartmentController extends Controller
-{
+class ApartmentController extends Controller {
     private $validations = [
-        'name'                => 'required|string|max:200',
-        'rooms'               => 'required|integer',
-        'beds'                => 'required|integer',
-        'bathrooms'           => 'required|integer',
-        'square_meters'       => 'required|integer',
-        'is_available'        => 'required|boolean',
-        'is_sponsored'        => 'required|boolean',
-        'user.id'             => 'required|exists:users,id',
-        'address'             => 'required|array',
-        'address.*.street'    => 'required|string|max:200',
-        'address.*.city'      => 'required|string|max:100',
-        'address.*.zip'       => 'required|string|max:10',
-        'services'            => 'array',
-        'services.*.name'     => 'required|max:70',
-        'services.*.icon'     => 'max:100',
-        'images'              => 'array',
+        'name' => 'required|string|max:200',
+        'rooms' => 'required|integer',
+        'beds' => 'required|integer',
+        'bathrooms' => 'required|integer',
+        'square_meters' => 'required|integer',
+        'is_available' => 'required|boolean',
+        'is_sponsored' => 'required|boolean',
+        'user.id' => 'required|exists:users,id',
+        'address' => 'required|array',
+        'address.*.street' => 'required|string|max:200',
+        'address.*.city' => 'required|string|max:100',
+        'address.*.zip' => 'required|string|max:10',
+        'services' => 'array',
+        'services.*.name' => 'required|max:70',
+        'services.*.icon' => 'max:100',
+        'images' => 'array',
         'images.*.image_path' => 'string',
-        'images.*.is_cover'   => 'required|boolean',
+        'images.*.is_cover' => 'required|boolean',
     ];
 
     private $validations_messages = [
-        'required'                      => 'Il campo :attribute è obbligatorio.',
-        'max'                           => 'Il campo :attribute deve avere al massimo :max caratteri.',
-        'exists'                        => 'Valore non valido.',
+        'required' => 'Il campo :attribute è obbligatorio.',
+        'max' => 'Il campo :attribute deve avere al massimo :max caratteri.',
+        'exists' => 'Valore non valido.',
     ];
 
-    public function index()
-    {
+    public function index() {
         $apartments = Apartment::with(['user', 'address', 'services', 'images', 'views']);
         return view('admin.apartments.index', compact('apartments'));
     }
 
 
-    public function create()
-    {
+    public function create() {
         $services = Service::all();
-        $images = Image::all();
-        $addresses = Address::all();
-        $views = View::all();
-        $sponsorships = Sponsorship::all();
-        return view('Admin.apartments.create', compact('services', 'images', 'addresses', 'views', 'sponsorships'));
+        return view('Admin.apartments.create', compact('services'));
     }
 
 
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
+
+//        dd($request);
         $request->validate($this->validations, $this->validations_messages);
         $data = $request->all();
         $coverImageIndex = $request->input('cover_image_index', -1);
 
         // Salvare i dati nel database per gli apartment
         $newApartment = new apartment();
-        $newApartment->title            = $data['title'];
-        $newApartment->user_id          = auth()->user()->id;
-        $newApartment->sponsor_id       = $data['sponsor_id'];
-        $newApartment->slug             = apartment::slugger($data['title']);
-        $newApartment->rooms            = $data['rooms'];
-        $newApartment->beds             = $data['beds'];
-        $newApartment->bathrooms        = $data['bathrooms'];
-        $newApartment->square_meters    = $data['square_meters'];
-        $newApartment->available        = $data['available'];
+        $newApartment->title = $data['title'];
+        $newApartment->user_id = auth()->user()->id;
+        $newApartment->sponsor_id = $data['sponsor_id'];
+        $newApartment->slug = apartment::slugger($data['title']);
+        $newApartment->rooms = $data['rooms'];
+        $newApartment->beds = $data['beds'];
+        $newApartment->bathrooms = $data['bathrooms'];
+        $newApartment->square_meters = $data['square_meters'];
+        $newApartment->available = $data['available'];
         $newApartment->save();
 
         $newApartment->utilities()->sync($data['utilities'] ?? []);
@@ -84,9 +78,9 @@ class ApartmentController extends Controller
         // istanza per gli address
 
         $newAddress = new Address();
-        $newAddress->address            = $data['address'];
-        $newAddress->latitude           = $data['latitude'];
-        $newAddress->longitude          = $data['longitude'];
+        $newAddress->address = $data['address'];
+        $newAddress->latitude = $data['latitude'];
+        $newAddress->longitude = $data['longitude'];
 
         $newAddress->apartment()->associate($newApartment);
         $newAddress->save();
@@ -121,20 +115,17 @@ class ApartmentController extends Controller
         }
 
 
-
         return redirect()->route('admin.apartments.show', ['apartment' => $newApartment]);
     }
 
 
-    public function show($slug)
-    {
+    public function show($slug) {
         $apartment = Apartment::where('slug', $slug)->firstOrFail();
         return view('admin.apartments.show', compact('apartment'));
     }
 
 
-    public function edit($slug)
-    {
+    public function edit($slug) {
         $apartment = Apartment::where('slug', $slug)->firstOrFail();
         $services = Service::all();
         $images = Image::all();
@@ -145,8 +136,7 @@ class ApartmentController extends Controller
     }
 
 
-    public function update(Request $request, $slug)
-    {
+    public function update(Request $request, $slug) {
         $apartment = Apartment::where('slug', $slug)->firstOrFail();
         $request->validate($this->validations, $this->validations_messages);
         $data = $request->all();
@@ -159,14 +149,14 @@ class ApartmentController extends Controller
         //     $apartment->image_id = $imagePath;
         // }
 
-        $apartment->title            = $data['title'];
-        $apartment->address_id       = $data['address_id'];
-        $apartment->user_id          = $data['user_id'];
-        $apartment->rooms            = $data['rooms'];
-        $apartment->beds             = $data['beds'];
-        $apartment->bathrooms        = $data['bathrooms'];
-        $apartment->square_meters    = $data['square_meters'];
-        $apartment->available        = $data['available'];
+        $apartment->title = $data['title'];
+        $apartment->address_id = $data['address_id'];
+        $apartment->user_id = $data['user_id'];
+        $apartment->rooms = $data['rooms'];
+        $apartment->beds = $data['beds'];
+        $apartment->bathrooms = $data['bathrooms'];
+        $apartment->square_meters = $data['square_meters'];
+        $apartment->available = $data['available'];
         $apartment->update();
 
         $apartment->services()->sync($data['services'] ?? []);
@@ -176,8 +166,7 @@ class ApartmentController extends Controller
     }
 
 
-    public function destroy($slug)
-    {
+    public function destroy($slug) {
         $apartment = Apartment::where('slug', $slug)->firstOrFail();
 
         $apartment->delete();
@@ -185,37 +174,31 @@ class ApartmentController extends Controller
         return to_route('admin.apartments.index')->with('delete_success', $apartment);
     }
 
-    public function restore($slug)
-    {
+    public function restore($slug) {
         $apartment = Apartment::find($slug);
         Apartment::withTrashed()->where('slug', $slug)->restore();
         $apartment = Apartment::where('slug', $slug)->firstOrFail();
-
 
 
         return to_route('admin.apartments.trashed')->with('restore_success', $apartment);
     }
 
-    public function cancel($slug)
-    {
+    public function cancel($slug) {
         $apartment = Apartment::find($slug);
         Apartment::withTrashed()->where('slug', $slug)->restore();
         $apartment = Apartment::where('slug', $slug)->firstOrFail();
 
 
-
         return to_route('admin.apartments.index')->with('cancel_success', $apartment);
     }
 
-    public function trashed()
-    {
+    public function trashed() {
         $trashedApartments = Apartment::onlyTrashed()->paginate(5);
 
         return view('admin.apartments.trashed', compact('trashedApartments'));
     }
 
-    public function harddelete($slug)
-    {
+    public function harddelete($slug) {
         $apartment = Apartment::withTrashed()->where('slug', $slug)->first();
 
         if ($apartment->file) {
