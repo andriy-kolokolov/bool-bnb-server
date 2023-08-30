@@ -18,7 +18,7 @@
 
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{ $apartment->name }}" required>
+                <input type="text" class="form-control" id="name" name="name" value="{{ $apartment->name }}" placeholder="Apartment name" required>
             </div>
 
             <div class="form-group">
@@ -52,22 +52,22 @@
 
             <div class="form-group">
                 <label for="rooms">Rooms:</label>
-                <input type="number" class="form-control" id="rooms" name="rooms" value="{{ $apartment->rooms }}" required>
+                <input type="number" class="form-control" id="rooms" name="rooms" value="{{ $apartment->rooms }}" placeholder="Rooms" required>
             </div>
 
             <div class="form-group">
                 <label for="beds">Beds:</label>
-                <input type="number" class="form-control" id="beds" name="beds" value="{{ $apartment->beds }}" required>
+                <input type="number" class="form-control" id="beds" name="beds" value="{{ $apartment->beds }}" placeholder="Beds" required>
             </div>
 
             <div class="form-group">
                 <label for="bathrooms">Bathrooms:</label>
-                <input type="number" class="form-control" id="bathrooms" name="bathrooms" value="{{ $apartment->bathrooms }}" required>
+                <input type="number" class="form-control" id="bathrooms" name="bathrooms" value="{{ $apartment->bathrooms }}" placeholder="Bathrooms" required>
             </div>
 
             <div class="form-group">
                 <label for="square_meters">Square Meters:</label>
-                <input type="number" class="form-control" id="square_meters" name="square_meters" value="{{ $apartment->square_meters }}" required>
+                <input type="number" class="form-control" id="square_meters" name="square_meters" value="{{ $apartment->square_meters }}" placeholder="Square meters" required>
             </div>
 
             <div class="form-group">
