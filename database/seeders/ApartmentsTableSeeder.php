@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Service;
 use App\Models\Apartment;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Str;
 
 class ApartmentsTableSeeder extends Seeder
 {
@@ -17,6 +17,7 @@ class ApartmentsTableSeeder extends Seeder
         $apartmentsData = [
             [
                 'name'          => 'Cozy Studio Apartment',
+                'slug' => Str::slug('Cozy Studio Apartment'),
                 'rooms'         => 1,
                 'beds'          => 1,
                 'bathrooms'     => 1,
@@ -27,6 +28,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name'          => 'Spacious 2-Bedroom Apartment',
+                'slug' => Str::slug('Spacious 2-Bedroom Apartment'),
                 'rooms'         => 3,
                 'beds'          => 2,
                 'bathrooms'     => 2,
@@ -37,6 +39,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name'          => 'Luxury Penthouse Suite',
+                'slug' => Str::slug('Luxury Penthouse Suite'),
                 'rooms'         => 4,
                 'beds'          => 3,
                 'bathrooms'     => 3,
@@ -47,6 +50,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name'          => 'Charming Garden Apartment',
+                'slug' => Str::slug('Charming Garden Apartment'),
                 'rooms'         => 2,
                 'beds'          => 1,
                 'bathrooms'     => 1,
@@ -57,6 +61,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name'          => 'Seaside Beach House',
+                'slug' => Str::slug('Seaside Beach House'),
                 'rooms'         => 5,
                 'beds'          => 4,
                 'bathrooms'     => 3,
@@ -67,6 +72,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name'          => 'Mountain View Cabin',
+                'slug' => Str::slug('Mountain View Cabin'),
                 'rooms'         => 3,
                 'beds'          => 2,
                 'bathrooms'     => 2,
@@ -77,6 +83,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name'          => 'Downtown Loft Apartment',
+                'slug' => Str::slug('Downtown Loft Apartment'),
                 'rooms'         => 1,
                 'beds'          => 1,
                 'bathrooms'     => 1,
@@ -87,6 +94,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name'          => 'Rural Farmhouse Retreat',
+                'slug' => Str::slug('Rural Farmhouse Retreat'),
                 'rooms'         => 4,
                 'beds'          => 3,
                 'bathrooms'     => 2,
@@ -97,6 +105,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name'          => 'Sunny Beachfront Condo',
+                'slug' => Str::slug('Sunny Beachfront Condo'),
                 'rooms'         => 2,
                 'beds'          => 1,
                 'bathrooms'     => 1,
@@ -107,6 +116,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name'          => 'Historic City Center Apartment',
+                'slug' => Str::slug('Historic City Center Apartment'),
                 'rooms'         => 2,
                 'beds'          => 1,
                 'bathrooms'     => 1,
@@ -117,6 +127,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name'          => 'Riverside Cabin Retreat',
+                'slug' => Str::slug('Riverside Cabin Retreat'),
                 'rooms'         => 3,
                 'beds'          => 2,
                 'bathrooms'     => 1,
@@ -127,6 +138,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name'          => 'Urban Studio Loft',
+                'slug' => Str::slug('Urban Studio Loft'),
                 'rooms'         => 1,
                 'beds'          => 1,
                 'bathrooms'     => 1,
@@ -137,6 +149,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name'          => 'Secluded Lakeside Cottage',
+                'slug' => Str::slug('Secluded Lakeside Cottage'),
                 'rooms'         => 2,
                 'beds'          => 1,
                 'bathrooms'     => 1,
@@ -147,6 +160,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name'          => 'Mountain Retreat Chalet',
+                'slug' => Str::slug('Mountain Retreat Chalet'),
                 'rooms'         => 3,
                 'beds'          => 2,
                 'bathrooms'     => 2,
@@ -157,6 +171,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name'          => 'Downtown Luxury Penthouse',
+                'slug' => Str::slug('Downtown Luxury Penthouse'),
                 'rooms'         => 4,
                 'beds'          => 3,
                 'bathrooms'     => 3,
@@ -167,6 +182,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name'          => 'City View Apartment',
+                'slug' => Str::slug('City View Apartment'),
                 'rooms'         => 2,
                 'beds'          => 2,
                 'bathrooms'     => 2,
@@ -177,6 +193,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name'          => 'Countryside Villa',
+                'slug' => Str::slug('Countryside Villa'),
                 'rooms'         => 5,
                 'beds'          => 4,
                 'bathrooms'     => 3,
@@ -187,6 +204,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name'          => 'Oceanfront Paradise',
+                'slug' => Str::slug('Oceanfront Paradise'),
                 'rooms'         => 3,
                 'beds'          => 2,
                 'bathrooms'     => 2,
@@ -197,6 +215,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Downtown Loft',
+                'slug' => Str::slug('Downtown Loft'),
                 'rooms' => 2,
                 'beds' => 1,
                 'bathrooms' => 1,
@@ -207,6 +226,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Riverside Cabin',
+                'slug' => Str::slug('Riverside Cabin'),
                 'rooms' => 2,
                 'beds' => 1,
                 'bathrooms' => 1,
@@ -217,6 +237,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Mountain View Chalet',
+                'slug' => Str::slug('Mountain View Chalet'),
                 'rooms' => 3,
                 'beds' => 2,
                 'bathrooms' => 2,
@@ -227,6 +248,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Beachfront Bungalow',
+                'slug' => Str::slug('Beachfront Bungalow'),
                 'rooms' => 2,
                 'beds' => 1,
                 'bathrooms' => 1,
@@ -237,6 +259,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Mountain Retreat Cabin',
+                'slug' => Str::slug('Mountain Retreat Cabin'),
                 'rooms' => 2,
                 'beds' => 1,
                 'bathrooms' => 1,
@@ -247,6 +270,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Lakeside Cottage',
+                'slug' => Str::slug('Lakeside Cottage'),
                 'rooms' => 3,
                 'beds' => 2,
                 'bathrooms' => 2,
@@ -257,6 +281,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Luxury Villa with Pool',
+                'slug' => Str::slug('Luxury Villa with Pool'),
                 'rooms' => 6,
                 'beds' => 4,
                 'bathrooms' => 5,
@@ -267,6 +292,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Downtown Studio Apartment',
+                'slug' => Str::slug('Downtown Studio Apartment'),
                 'rooms' => 1,
                 'beds' => 1,
                 'bathrooms' => 1,
@@ -277,6 +303,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Forest Retreat Cabin',
+                'slug' => Str::slug('Forest Retreat Cabin'),
                 'rooms' => 2,
                 'beds' => 1,
                 'bathrooms' => 1,
@@ -287,6 +314,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Seaside Apartment with a View',
+                'slug' => Str::slug('Seaside Apartment with a View'),
                 'rooms' => 2,
                 'beds' => 1,
                 'bathrooms' => 1,
@@ -297,6 +325,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Rustic Mountain Cabin',
+                'slug' => Str::slug('Rustic Mountain Cabin'),
                 'rooms' => 3,
                 'beds' => 2,
                 'bathrooms' => 2,
@@ -307,6 +336,7 @@ class ApartmentsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Beachfront Paradise Villa',
+                'slug' => Str::slug('Beachfront Paradise Villa'),
                 'rooms' => 4,
                 'beds' => 3,
                 'bathrooms' => 3,
@@ -318,9 +348,9 @@ class ApartmentsTableSeeder extends Seeder
         ];
 
         foreach ($apartmentsData as $apartmentData) {
-
-            $apartment = Apartment::create([
+            Apartment::create([
                 'name'          => $apartmentData['name'],
+                'slug'          => $apartmentData['slug'],
                 'rooms'         => $apartmentData['rooms'],
                 'beds'          => $apartmentData['beds'],
                 'bathrooms'     => $apartmentData['bathrooms'],
@@ -340,10 +370,6 @@ class ApartmentsTableSeeder extends Seeder
         // }
 
         // $apartment->sponsorships()->sync($apartmentData['sponsorships']);
-
-        foreach ($apartmentsData as $apartmentData) {
-            $apartmentData = Apartment::create($apartmentData);
-        }
 
         foreach (Apartment::all() as $apartmentFromDb) {
             $randomServices = Service::inRandomOrder()->take(rand(1, 3))->pluck('id')->toArray();

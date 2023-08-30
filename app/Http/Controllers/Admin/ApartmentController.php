@@ -60,6 +60,7 @@ class ApartmentController extends Controller {
         // Salvare i dati nel database per gli apartment
         $newApartment = new apartment();
         $newApartment->name = $validatedData['name'];
+        $newApartment->slug = Str::slug($newApartment->name);
         $newApartment->user_id = $user->id;
         $newApartment->rooms = $validatedData['rooms'];
         $newApartment->beds = $validatedData['beds'];
@@ -67,11 +68,10 @@ class ApartmentController extends Controller {
         $newApartment->square_meters = $validatedData['square_meters'];
         $newApartment->save();
 
-        if ($request->has('services')) {
-            $selectedServiceNames = $validatedData['services'];
-            $selectedServiceIds = Service::whereIn('name', $selectedServiceNames)->pluck('id')->toArray();
-            // Sync the selected services with the apartment
-            $newApartment->services()->sync($selectedServiceIds);
+        if ($validatedData['services']) {
+            $services = array_values($validatedData['services']);
+
+            $newApartment->services()->sync($services);
         }
 
         // istanza per gli address
