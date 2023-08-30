@@ -1,3 +1,11 @@
-<footer class="shadow-lg admin-footer fixed-bottom" id="footer">
-    <h1>FOOTER</h1>
-</footer>
+  <footer class="footer">
+    <div class="myContainer">
+      <div class="img">
+        <img src="{{ asset('logo-b.png') }}" alt="logo-b" />
+      </div>
+
+      <div class="info">
+        <p>Add links</p>
+      </div>
+    </div>
+  </footer>

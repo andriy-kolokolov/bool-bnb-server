@@ -37,8 +37,10 @@ class ApartmentController extends Controller {
         'min' => 'Field :attribute must have min :min chars.',
     ];
 
-    public function index() {
-        $apartments = Apartment::with(['user', 'address', 'services', 'images', 'views']);
+    public function index()
+    {
+        $apartments = Apartment::all();
+
         return view('admin.apartments.index', compact('apartments'));
     }
 
@@ -53,7 +55,6 @@ class ApartmentController extends Controller {
 
         $user = Auth::user();
 
-        //        dd($request);
         $request->validate($this->validations, $this->validations_messages);
         $validatedData = $request->all();
 
