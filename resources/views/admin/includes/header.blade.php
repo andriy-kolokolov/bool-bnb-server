@@ -40,10 +40,6 @@
 		</div>
 	</nav> --}}
 
-
-
-
-
 	<nav>
 		<div class="myContainer">
 		<!-- logo -->
@@ -81,6 +77,15 @@
 						Home
 					</div>
 				</li>
+				<li>
+					<a class="dropdown-item w-100" href="{{ route('profile.edit') }}">Edit profile</a>
+				</li>
+				<li>
+					<form class="dropdown-item" action="{{ route('logout') }}" method="post">
+						@csrf
+						<button class="btn btn-danger w-100">Log out</button>
+					</form>
+				</li>
 			</ul>
 			</div>
 			<!-- altra routes -->
@@ -109,7 +114,7 @@
 					data-bs-dismiss="offcanvas"
 					aria-label="Close"
 				>
-					<i class="fa-solid fa-xmark"></i>x
+					<i class="fa-solid fa-xmark"></i>
 				</button>
 				</div>
 				<div class="offcanvas-body">
@@ -120,6 +125,21 @@
 								<div  class="drop-item">
 									Home
 								</div>
+							</button>
+						</li>
+						<li>
+							<button data-bs-dismiss="offcanvas" aria-label="Close" href="{{ route('profile.edit') }}">
+								<div  class="drop-item">
+									Edit profile
+								</div>
+							</button>
+						</li>
+						<li>
+							<button data-bs-dismiss="offcanvas" aria-label="Close" class="drop-item">	
+								<form action="{{ route('logout') }}" method="post">
+									@csrf
+									<button>Log out</button>
+								</form>
 							</button>
 						</li>
 					</ul>
