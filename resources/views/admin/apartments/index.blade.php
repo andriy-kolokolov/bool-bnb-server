@@ -28,7 +28,6 @@
                         <th scope="row">{{ $apartment->id }}</th>
                         <td>{{ $apartment->name }}</td>
                         <td>
-                            <a class="btn btn-primary" href="{{ route('admin.apartments.show', ['apartment' => $apartment]) }}">View</a>
                             <!-- Button delete -->
                             <form
                                 action="{{ route('admin.apartments.destroy', ['apartment' => $apartment]) }}"

@@ -45,23 +45,22 @@
 
 
 	<nav>
-
 		<div class="myContainer">
 		<!-- logo -->
-		<div href="http://localhost:5173" class="image">
+		<a class="image" href="http://localhost:5173">
 			<img
-			src="{{ asset('logo-orizzontale.png') }}"
-			alt="logo"
-			class="ms-total"
+				src="{{ asset('logo-orizzontale.png') }}"
+				alt="logo"
+				class="ms-total"
 			/>
 			<img src="{{ asset('logo-b.png') }}" alt="logo-small" class="ms-small" />
-		</div>
+		</a>
 
 		<!-- search -->
 		<form class="search">
 			<input class="myInput" type="text" />
 			<button class="myBtn">
-			<i class="fa-solid fa-magnifying-glass"></i>
+				<i class="fa-solid fa-magnifying-glass"></i>
 			</button>
 		</form>
 
@@ -78,44 +77,9 @@
 			</button>
 			<ul class="dropdown-menu dropdown-menu-end">
 				<li>
-				<div href="http://localhost:5173" class="dropdown-item">
-					Home
-				</div>
-				</li>
-				<li>
-				<div href="http://localhost:5173/about" class="dropdown-item">
-					About
-				</div>
-				</li>
-				<li>
-				<a
-					href="http://127.0.0.1:8000/admin"
-					class="dropdown-item ms-menu-link"
-					>Dashboard</a
-				>
-				</li>
-				<li>
-				<a
-					href="http://127.0.0.1:8000/login"
-					class="dropdown-item ms-menu-link"
-					>Login</a
-				>
-				</li>
-				<li>
-				<a
-					href="http://127.0.0.1:8000/register"
-					class="dropdown-item ms-menu-link"
-					>Register</a
-				>
-				</li>
-				<li>
-				<button
-					v-if="store.auth.authenticated"
-					
-					class="dropdown-item"
-				>
-					Sign Out
-				</button>
+					<div href="http://localhost:5173" class="dropdown-item">
+						Home
+					</div>
 				</li>
 			</ul>
 			</div>
@@ -123,7 +87,6 @@
 			<div class="menu-off">
 			<button
 				id="btn"
-				
 				type="button"
 				data-bs-toggle="offcanvas"
 				data-bs-target="#staticBackdrop"
@@ -152,72 +115,13 @@
 				<div class="offcanvas-body">
 				<div class="ms-routes">
 					<ul>
-					<li>
-						<button data-bs-dismiss="offcanvas" aria-label="Close">
-						<div to="/" class="drop-item">
-							Home
-						</div>
-						</button>
-					</li>
-					<li>
-						<button data-bs-dismiss="offcanvas" aria-label="Close">
-						<div
-							to="/about"
-							class="drop-item"
-							
-						>
-							About
-						</div>
-						</button>
-					</li>
-					<li>
-						<button data-bs-dismiss="offcanvas" aria-label="Close">
-						<a
-							href="http://127.0.0.1:8000/admin"
-							class="drop-item"
-							
-						>
-							Dashboard
-						</a>
-						</button>
-					</li>
-					<li>
-						<button data-bs-dismiss="offcanvas" aria-label="Close">
-						<a
-							href="http://127.0.0.1:8000/login"
-							class="drop-item"
-							
-						>
-							Login
-						</a>
-						</button>
-					</li>
-					<li>
-						<button data-bs-dismiss="offcanvas" aria-label="Close">
-						<a
-							href="http://127.0.0.1:8000/register"
-							class="drop-item"
-							
-						>
-							Register
-						</a>
-						</button>
-					</li>
-					<li>
-						<button
-						data-bs-dismiss="offcanvas"
-						aria-label="Close"
-						
-						>
-						<a
-							v-if="store.auth.authenticated"
-							
-							class="drop-item"
-						>
-							Logout
-						</a>
-						</button>
-					</li>
+						<li>
+							<button data-bs-dismiss="offcanvas" aria-label="Close" href="http://localhost:5173">
+								<div  class="drop-item">
+									Home
+								</div>
+							</button>
+						</li>
 					</ul>
 				</div>
 				</div>

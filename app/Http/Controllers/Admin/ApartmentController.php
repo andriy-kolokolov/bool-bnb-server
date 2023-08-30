@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class ApartmentController extends Controller {
+class ApartmentController extends Controller
+{
     private array $validations = [
         'name' => 'required|string|max:200',
         'rooms' => 'required|integer|min:1',
@@ -37,20 +38,24 @@ class ApartmentController extends Controller {
         'min' => 'Field :attribute must have min :min chars.',
     ];
 
-    public function index() {
-        $apartments = Apartment::all();
+    public function index()
+    {
+        $user = Auth::user();
+        $apartments = Apartment::where('user_id', $user->id)->with('user')->get();
 
         return view('admin.apartments.index', compact('apartments'));
     }
 
 
-    public function create() {
+    public function create()
+    {
         $services = Service::all();
         return view('Admin.apartments.create', compact('services'));
     }
 
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
 
         $user = Auth::user();
 
@@ -118,20 +123,23 @@ class ApartmentController extends Controller {
     }
 
 
-    public function show($id) {
+    public function show($id)
+    {
         $apartment = Apartment::where('id', $id)->firstOrFail();
         return view('admin.apartments.show', compact('apartment'));
     }
 
 
-    public function edit($id) {
+    public function edit($id)
+    {
         $apartment = Apartment::with('address', 'user', 'services', 'images')->find($id);
         $services = Service::all();
         return view('admin.apartments.edit', compact('apartment', 'services'));
     }
 
 
-    public function update(Request $request, int $id) {
+    public function update(Request $request, int $id)
+    {
         $apartment = Apartment::findOrFail($id);
 
         $request->validate($this->validations, $this->validations_messages);
@@ -192,11 +200,11 @@ class ApartmentController extends Controller {
         }
 
         return redirect()->route('admin.apartments.index')->with('success', 'Apartment updated successfully');
-
     }
 
 
-    public function destroy($slug) {
+    public function destroy($slug)
+    {
         $apartment = Apartment::where('slug', $slug)->firstOrFail();
 
         $apartment->delete();
@@ -208,43 +216,6 @@ class ApartmentController extends Controller {
         $apartment->views()->delete();
         $apartment->delete();
 
-        return to_route('admin.apartments.index')->with('delete_success');
-    }
-
-    public function restore($slug) {
-        $apartment = Apartment::find($slug);
-        Apartment::withTrashed()->where('slug', $slug)->restore();
-        $apartment = Apartment::where('slug', $slug)->firstOrFail();
-
-
-        return to_route('admin.apartments.trashed')->with('restore_success', $apartment);
-    }
-
-    public function cancel($slug) {
-        $apartment = Apartment::find($slug);
-        Apartment::withTrashed()->where('slug', $slug)->restore();
-        $apartment = Apartment::where('slug', $slug)->firstOrFail();
-
-
-        return to_route('admin.apartments.index')->with('cancel_success', $apartment);
-    }
-
-    public function trashed() {
-        $trashedApartments = Apartment::onlyTrashed()->paginate(5);
-
-        return view('admin.apartments.trashed', compact('trashedApartments'));
-    }
-
-    public function harddelete($slug) {
-        $apartment = Apartment::withTrashed()->where('slug', $slug)->first();
-
-        if ($apartment->file) {
-            Storage::delete($apartment->file);
-        }
-        // se ho il trashed lo inserisco nel harddelete
-
-        $apartment->utilities()->detach();
-        $apartment->forceDelete();
-        return to_route('admin.apartments.trashed')->with('delete_success', $apartment);
+        return to_route('admin.apartments.index')->with('delete_success', $apartment);
     }
 }
