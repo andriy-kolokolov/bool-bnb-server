@@ -103,7 +103,7 @@
 
 			<div class="d-flex gap-1 mt-3">
 				<a class="btn btn-secondary" href="{{ route('admin.apartments.index') }}">Back</a>
-				<button type="submit" class="btn btn-primary">Create Apartment</button>
+				<button type="submit" class="btn myBtnPurple" style="background-color: #485ba1; color: white;">Create Apartment</button>
 			</div>
 		</form>
 	</div>

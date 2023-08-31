@@ -13,8 +13,8 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ $sponsorship->duration }}</h5>
-                            <h6 class="card-title mt-3 mb-3">{{ $sponsorship->price }}</h6>
-                            <a href="#" class="btn btn-primary">Buy</a>
+                            <h6 class="card-title mt-3 mb-3" style="color: #9153a9;">{{ $sponsorship->price }}</h6>
+                            <a href="#" class="btn myBtnPurple" style="background-color: #485ba1; color: white;">Buy</a>
                         </div>
                     </div>
                 @endforeach

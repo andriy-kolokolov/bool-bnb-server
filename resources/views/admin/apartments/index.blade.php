@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="index container-fluid mt-5">
+    <div class="index container-fluid mt-5 w-75">
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -25,7 +25,7 @@
         <h1 class="mb-3">MY APARTMENTS</h1>
         <div class="d-flex gap-1 mb-4">
             <a class="btn btn-secondary" href="{{ route('admin.dashboard') }}">Back</a>
-            <a class="btn btn-primary" href="{{ route('admin.apartments.create') }}">Add new Apartment</a>
+            <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;" href="{{ route('admin.apartments.create') }}">Add new Apartment</a>
         </div>
 
 
@@ -34,6 +34,9 @@
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Available</th>
+                <th scope="col">Sponsor</th>
                 <th scope="col">Actions</th>
             </tr>
             </thead>
@@ -42,12 +45,15 @@
                 <tr>
                     <th scope="row">{{ $apartment->id }}</th>
                     <td>{{ $apartment->name }}</td>
-                    <td style="width: 350px;">
-                        <a class="btn btn-primary"
+                    <td>{{ $apartment->address->street }} - {{ $apartment->address->zip }} {{ $apartment->address->city }}</td>
+                    <td>{!! $apartment->is_available ? '<i style="color: green; font-size: 25px;" class="fa-solid fa-check ms-3 mt-1"></i>' : '<i style="color: red; font-size: 25px;"  class="fa-solid fa-xmark ms-3 mt-1"></i>' !!}</td>
+                    <td>{!! $apartment->is_sponsored ? '<i style="color: green; font-size: 25px;" class="fa-solid fa-check ms-3 mt-1"></i>' : '<i style="color: red; font-size: 25px;"  class="fa-solid fa-xmark ms-3 mt-1"></i>' !!}</td>
+                    <td style="width: 290px;">
+                        <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
                            href="{{ route('admin.apartments.show', ['apartment' => $apartment]) }}">Show</a>
-                        <a class="btn btn-warning"
+                        <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
                            href="{{ route('admin.apartments.edit', ['apartment' => $apartment]) }}">Edit</a>
-                        <a class="btn btn-success"
+                        <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
                            href="{{ route('admin.apartments.sponsorship', ['apartment' => $apartment]) }}">Sponsor</a>
 
                         <!-- Button delete -->

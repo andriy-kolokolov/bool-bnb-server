@@ -41,7 +41,8 @@ class ApartmentController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $apartments = Apartment::where('user_id', $user->id)->with('user')->get();
+        $apartments = Apartment::with('address')->where('user_id', $user->id)->with('user')->get();
+        // dd($apartments);
 
         return view('admin.apartments.index', compact('apartments'));
     }
@@ -60,7 +61,7 @@ class ApartmentController extends Controller
 
         $request->validate($this->validations, $this->validations_messages);
         $validatedData = $request->all();
-//        dd($validatedData)  ;
+        //        dd($validatedData)  ;
 
         // Salvare i dati nel database per gli apartment
         $newApartment = new apartment();
