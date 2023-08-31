@@ -1,7 +1,7 @@
 @extends('admin.layouts.base')
 
 @section('content')
-    <div class="container mt-4">
+    <div class="container mt-3 mb-3">
         <h2>Create Apartment</h2>
         @if ($errors->any())
             <div class="alert alert-danger">
