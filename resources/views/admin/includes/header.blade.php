@@ -43,7 +43,7 @@
 	<nav>
 		<div class="myContainer">
 		<!-- logo -->
-		<a class="image" href="http://127.0.0.1:8000/admin">
+		<a class="image" href="http://localhost:5174">
 			<img
 				src="{{ asset('logo-orizzontale.png') }}"
 				alt="logo"

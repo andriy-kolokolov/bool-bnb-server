@@ -80,11 +80,13 @@
             >
         </div>
 
-        <a href="{{ route('login') }}">
-            Already registered?
-        </a>
+        <div class="d-flex justify-content-between">
+            <a href="{{ route('login') }}">
+                Already registered?
+            </a>
 
-        <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </div>
     </form>
 
 @endsection
