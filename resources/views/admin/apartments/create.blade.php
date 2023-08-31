@@ -1,7 +1,7 @@
 @extends('admin.layouts.base')
 
 @section('content')
-    <div class="container">
+    <div class="container mt-4">
         <h2>Create Apartment</h2>
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -74,8 +74,11 @@
                 <input type="file" class="form-control-file" id="images" name="images[]" accept="image/*" multiple
                        required>
             </div>
-
-            <button type="submit" class="btn btn-primary">Create Apartment</button>
+            
+            <div class="d-flex gap-1 mt-3">
+                <a class="btn btn-secondary" href="{{ route('admin.apartments.index') }}">Back</a>
+                <button type="submit" class="btn btn-primary">Create Apartment</button>
+            </div>
         </form>
     </div>
 @endsection

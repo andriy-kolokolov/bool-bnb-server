@@ -8,6 +8,11 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <style>
+            .ms-main {
+                height: calc(100vh - 120px);
+                display: flex;
+            }
+
             nav {
                 height: 70px;
                 width: 100%;
@@ -327,7 +332,7 @@
 
     @include('admin.includes.header')
 
-    <main class="main-container mb-5">
+    <main class="main-container ms-main">
         <div class="container-fluid">
             @yield('content')
         </div>

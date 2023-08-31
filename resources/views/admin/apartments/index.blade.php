@@ -2,9 +2,14 @@
 
 @section('content') 
 
-    <div class="index container">
-    
-        <h1>APARTMENT</h1>
+    <div class="index container mt-5">
+
+        <h1 class="mb-3">APARTMENT</h1>
+        <div class="d-flex gap-1 mb-4">
+            <a class="btn btn-secondary" href="{{ route('admin.dashboard') }}">Back</a>
+            <a class="btn btn-primary" href="{{ route('admin.apartments.create') }}">Add new Apartment</a>
+        </div>
+
 
             {{-- conferma delete --}}
             @if (session('delete_success'))
@@ -28,10 +33,11 @@
                         <th scope="row">{{ $apartment->id }}</th>
                         <td>{{ $apartment->name }}</td>
                         <td>
+                            <a class="btn btn-warning" href="{{ route('admin.apartments.edit', ['apartment' => $apartment]) }}">Edit</a>
                             <!-- Button delete -->
                             <form
                                 action="{{ route('admin.apartments.destroy', ['apartment' => $apartment]) }}"
-                                method="apartment"
+                                method="post"
                                 class="d-inline-block"
                             >
                                 @csrf

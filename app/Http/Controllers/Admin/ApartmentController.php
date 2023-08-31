@@ -126,7 +126,7 @@ class ApartmentController extends Controller
     public function show($id)
     {
         $apartment = Apartment::where('id', $id)->firstOrFail();
-        return view('admin.apartments.show', compact('apartment'));
+        return compact('apartment');
     }
 
 
@@ -207,13 +207,6 @@ class ApartmentController extends Controller
     {
         $apartment = Apartment::where('slug', $slug)->firstOrFail();
 
-        $apartment->delete();
-        $apartment->address()->delete();
-        $apartment->images()->delete();
-        $apartment->services()->detach();
-        $apartment->sponsorships()->detach();
-        $apartment->messages()->delete();
-        $apartment->views()->delete();
         $apartment->delete();
 
         return to_route('admin.apartments.index')->with('delete_success', $apartment);
