@@ -23,7 +23,8 @@ Route::middleware(['auth', 'verified'])
     ->name('admin.')
     ->prefix('admin')
     ->group(function () {
-        Route::get('/', [AdminPageController::class, 'dashboard'])->name('dashboard');
+        Route::get('/',                         [AdminPageController::class, 'dashboard'])->name('dashboard');
+        Route::get('/apartments/sponsorship',   [ApartmentController::class, 'sponsorship'])->name('apartments.sponsorship');
         Route::resource('apartments', ApartmentController::class);
     });
 
@@ -34,4 +35,3 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
-

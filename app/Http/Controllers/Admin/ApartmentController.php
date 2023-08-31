@@ -211,4 +211,12 @@ class ApartmentController extends Controller
 
         return to_route('admin.apartments.index')->with('delete_success', $apartment);
     }
+
+
+    public function sponsorship($id)
+    {
+        // ovviamente da finire
+        $apartments = Apartment::where('id', $id)->firstOrFail();
+        return view('admin.apartments.sponsorship', compact('apartments'));
+    }
 }

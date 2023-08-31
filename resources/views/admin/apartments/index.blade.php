@@ -4,7 +4,7 @@
 
     <div class="index container mt-5">
 
-        <h1 class="mb-3">APARTMENT</h1>
+        <h1 class="mb-3">MY APARTMENT</h1>
         <div class="d-flex gap-1 mb-4">
             <a class="btn btn-secondary" href="{{ route('admin.dashboard') }}">Back</a>
             <a class="btn btn-primary" href="{{ route('admin.apartments.create') }}">Add new Apartment</a>
@@ -32,8 +32,9 @@
                     <tr>
                         <th scope="row">{{ $apartment->id }}</th>
                         <td>{{ $apartment->name }}</td>
-                        <td>
+                        <td style="width: 350px;">
                             <a class="btn btn-warning" href="{{ route('admin.apartments.edit', ['apartment' => $apartment]) }}">Edit</a>
+                            <a class="btn btn-success" href="{{ route('admin.apartments.sponsorship', ['apartment' => $apartment]) }}">Sponsor</a>
                             <!-- Button delete -->
                             <form
                                 action="{{ route('admin.apartments.destroy', ['apartment' => $apartment]) }}"
