@@ -16,19 +16,19 @@ class SponsorshipsTableSeeder extends Seeder
 
         $sponsorships = [
             [
-                'level'    => 'Basic', 
-                'price'    => '50', 
-                'duration' => '7 days'
+                'level'    => 'Basic',
+                'price'    => '2,99 €',
+                'duration' => '24 hours'
             ],
             [
-                'level'    => 'Premium', 
-                'price'    => '100', 
-                'duration' => '14 days'
+                'level'    => 'Premium',
+                'price'    => '5,99 €',
+                'duration' => '72 hours'
             ],
             [
-                'level'    => 'Deluxe', 
-                'price'    => '150', 
-                'duration' => '30 days'
+                'level'    => 'Deluxe',
+                'price'    => '9,99 €',
+                'duration' => '144 hours'
             ],
         ];
 

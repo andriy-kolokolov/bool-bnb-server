@@ -213,10 +213,9 @@ class ApartmentController extends Controller
     }
 
 
-    public function sponsorship($id)
+    public function sponsorship()
     {
-        // ovviamente da finire
-        $apartments = Apartment::where('id', $id)->firstOrFail();
-        return view('admin.apartments.sponsorship', compact('apartments'));
+        $sponsorships = sponsorship::all();
+        return view('admin.apartments.sponsorship', compact('sponsorships'));
     }
 }
