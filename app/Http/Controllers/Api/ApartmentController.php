@@ -6,14 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use Illuminate\Http\JsonResponse;
 
-class ApartmentController extends Controller {
-    public function index(): JsonResponse {
-        $apartments = Apartment::with(['user', 'address', 'services', 'images', 'views'])
-            ->get();
+class ApartmentController extends Controller
+{
+    public function index(): JsonResponse
+    {
+        // da sistemare
+        $apartments = Apartment::with(['user', 'address', 'services', 'images', 'views'])->orderBy('is_sponsored', 'DESC')->get();
         return response()->json($apartments);
     }
 
-    public function show($id): JsonResponse {
+    public function show($id): JsonResponse
+    {
         $apartment = Apartment::with(['user', 'address', 'services', 'images', 'messages', 'views', 'sponsorships'])
             ->find($id);
         if (!$apartment) {
@@ -24,7 +27,8 @@ class ApartmentController extends Controller {
 
     // END CRUDS
 
-    public function getAllOrderedByAvailability(): JsonResponse {
+    public function getAllOrderedByAvailability(): JsonResponse
+    {
         $apartments = Apartment::with(['user', 'address', 'services', 'images', 'views'])
             ->orderBy('is_available', 'desc')
             ->get();
@@ -32,7 +36,8 @@ class ApartmentController extends Controller {
         return response()->json($apartments);
     }
 
-    public function getAllOrderedBySponsorship(): JsonResponse {
+    public function getAllOrderedBySponsorship(): JsonResponse
+    {
         $apartments = Apartment::with(['user', 'address', 'services', 'images', 'views'])
             ->orderByDesc('is_sponsored')
             ->get();
@@ -40,7 +45,8 @@ class ApartmentController extends Controller {
         return response()->json($apartments);
     }
 
-    public function getImages($id): JsonResponse {
+    public function getImages($id): JsonResponse
+    {
         $images = Apartment::find($id)->images;
 
         if (!$images) {
@@ -50,7 +56,8 @@ class ApartmentController extends Controller {
         return response()->json($images);
     }
 
-    public function getServices($id): JsonResponse {
+    public function getServices($id): JsonResponse
+    {
         $services = Apartment::find($id)->services;
 
         if (!$services) {
@@ -60,7 +67,8 @@ class ApartmentController extends Controller {
         return response()->json($services);
     }
 
-    public function getViews($id): JsonResponse {
+    public function getViews($id): JsonResponse
+    {
         $views = Apartment::find($id)->views;
 
         if (!$views) {
@@ -70,7 +78,8 @@ class ApartmentController extends Controller {
         return response()->json($views);
     }
 
-    public function getMessages($id): JsonResponse {
+    public function getMessages($id): JsonResponse
+    {
         $apartment = Apartment::with('messages')->find($id);
 
         if (!$apartment) {
