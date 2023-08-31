@@ -125,8 +125,7 @@ class ApartmentController extends Controller
 
     public function show($id)
     {
-        $apartment = Apartment::where('id', $id)->firstOrFail();
-        return compact('apartment');
+        return redirect("http://localhost:5174/apartment/{$id}");
     }
 
 
@@ -203,13 +202,25 @@ class ApartmentController extends Controller
     }
 
 
-    public function destroy($slug)
+    public function destroy($id)
     {
-        $apartment = Apartment::where('slug', $slug)->firstOrFail();
+        $apartment = Apartment::find($id);
+        if (!$apartment) {
+            return response()->json(['message' => 'Apartment not found'], 404);
+        }
+        $apartment->address()->delete();
+        $apartment->services()->detach();
+        $apartment->sponsorships()->detach();
+        $apartment->messages()->delete();
+        $apartment->views()->delete();
 
+        foreach ($apartment->images as $image) {
+            Storage::delete($image->image_path);
+        }
+        $apartment->images()->delete();
         $apartment->delete();
 
-        return to_route('admin.apartments.index')->with('delete_success', $apartment);
+        return redirect()->route('admin.apartments.index')->with('success', 'Apartment deleted successfully.');
     }
 
 

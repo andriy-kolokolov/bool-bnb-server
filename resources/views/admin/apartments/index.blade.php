@@ -1,8 +1,13 @@
 @extends('admin.layouts.base')
 
-@section('content') 
+@section('content')
 
     <div class="index container mt-5">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
         <h1 class="mb-3">MY APARTMENT</h1>
         <div class="d-flex gap-1 mb-4">
@@ -33,6 +38,7 @@
                         <th scope="row">{{ $apartment->id }}</th>
                         <td>{{ $apartment->name }}</td>
                         <td style="width: 350px;">
+                            <a class="btn btn-primary" href="{{ route('admin.apartments.show', ['apartment' => $apartment]) }}">Show</a>
                             <a class="btn btn-warning" href="{{ route('admin.apartments.edit', ['apartment' => $apartment]) }}">Edit</a>
                             <a class="btn btn-success" href="{{ route('admin.apartments.sponsorship', ['apartment' => $apartment]) }}">Sponsor</a>
                             <!-- Button delete -->
