@@ -56,7 +56,6 @@ class ApartmentController extends Controller
 
     public function store(Request $request)
     {
-
         $user = Auth::user();
 
         $request->validate($this->validations, $this->validations_messages);
