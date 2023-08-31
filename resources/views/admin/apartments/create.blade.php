@@ -16,11 +16,6 @@
             </div>
         @endif
 
-{{--        <form>--}}
-{{--            <label for="address">Address:</label>--}}
-{{--            <input type="text" id="address" class="my-address-input" name="address" placeholder="Enter an address" autocomplete="off">--}}
-{{--        </form>--}}
-
         <form action="{{ route('admin.apartments.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
@@ -29,7 +24,10 @@
                     <label for="name">New Apartment Name:</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="New Apartment name" required>
                 </div>
+            </div>
+            <hr class="mt-4">
 
+            <div class="row">
                 <div class="col form-group" id="ms-input-wrap-address">
                     <label for="address" id="address-label">Search Address: </label>
                     <!--    TOM TOM INPUT    -->
@@ -39,39 +37,20 @@
             <div class="row mt-3">
                 <div class="col form-group" >
                     <label for="street">Street:</label>
-                    <input disabled type="text" id="street" class="form-control" name="street" placeholder="Street" required>
+                    <input type="text" id="street" class="form-control" name="street" placeholder="Street" required>
                 </div>
 
                 <div class=" col form-group">
                     <label for="city">City:</label>
-                    <input disabled type="text" id="city" class="form-control" name="city" placeholder="City" required>
+                    <input type="text" id="city" class="form-control" name="city" placeholder="City" required>
                 </div>
 
                 <div class="col form-group">
                     <label for="zip">ZIP:</label>
-                    <input disabled type="text" id="zip" class="form-control" name="zip" placeholder="ZIP" required>
+                    <input type="text" id="zip" class="form-control" name="zip" placeholder="ZIP" required>
                 </div>
             </div>
 
-            <div class="form-group mt-3">
-                <label>Services:</label><br>
-                <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
-                    @foreach ($services as $service)
-                        <div class="p-2 col d-flex justify-content-center">
-                            <label class="checkbox-inline d-flex flex-row justify-content-start ms-checkbox-label">
-                                <input type="checkbox" name="services[]" value="{{ $service['id'] }}"
-                                       class="h-100 d-flex align-items-center ms-custom-checkbox">
-                                <span class="ms-3 ms-icon-wrap d-flex align-items-center">
-                                    <i class="fs-icon {{ $service['icon'] }}"></i>
-                                    <span class="ms-3 name">
-                                        {{ $service['name'] }}
-                                    </span>
-                                </span>
-                            </label>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
 
             <div class="row mt-3">
                 <div class="col form-group">
@@ -95,7 +74,26 @@
                 </div>
             </div>
 
-
+            <hr class="mt-4">
+            <div class="form-group">
+                <label>Services:</label><br>
+                <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
+                    @foreach ($services as $service)
+                        <div class="p-2 col d-flex justify-content-center">
+                            <label class="checkbox-inline d-flex flex-row justify-content-start ms-checkbox-label">
+                                <input type="checkbox" name="services[]" value="{{ $service['id'] }}"
+                                       class="h-100 d-flex align-items-center ms-custom-checkbox">
+                                <span class="ms-3 ms-icon-wrap d-flex align-items-center">
+                                    <i class="fs-icon {{ $service['icon'] }}"></i>
+                                    <span class="ms-3 name">
+                                        {{ $service['name'] }}
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
 
             <div class="form-group mt-3">
                 <label for="images">Upload Images (min 5):</label>
@@ -117,9 +115,7 @@
     />
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.18.0/services/services-web.min.js"></script>
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.12/SearchBox-web.js"></script>
-    <script>
 
-    </script>
 @endsection
 
 

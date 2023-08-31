@@ -1,3 +1,4 @@
+
 // Initialize TomTom SearchBox
 const searchBox = new tt.plugins.SearchBox(tt.services, {
     minNumberOfCharacters: 2, // Minimum characters to trigger search
