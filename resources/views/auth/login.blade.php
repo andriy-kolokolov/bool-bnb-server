@@ -1,14 +1,18 @@
-@extends('guests.layouts.base')
+@extends('auth.layouts.base')
 
 @section('contents')
-    @if (session('error'))
+    @if ($errors->any())
         <div class="alert alert-danger">
-            {{ session('error') }}
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
     @endif
+
     <form method="post" action="{{ route('login') }}">
         @csrf
-
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input
