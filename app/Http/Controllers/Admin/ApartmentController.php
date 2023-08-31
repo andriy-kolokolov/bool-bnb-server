@@ -27,7 +27,7 @@ class ApartmentController extends Controller
         'address.*.city' => 'required|string|max:100',
         'address.*.zip' => 'required|string|max:10',
         'services' => 'array',
-        'images' => 'array',
+        'images' => 'array|min:5',
         'images.*.image_path' => 'string',
         'images.*.is_cover' => 'required|boolean',
     ];
@@ -35,7 +35,7 @@ class ApartmentController extends Controller
     private $validations_messages = [
         'required' => 'Field :attribute is required.',
         'max' => 'Field :attribute must have max :max chars.',
-        'min' => 'Field :attribute must have min :min chars.',
+        'min' => ':attribute must be min :min',
     ];
 
     public function index()
@@ -56,11 +56,11 @@ class ApartmentController extends Controller
 
     public function store(Request $request)
     {
-
         $user = Auth::user();
 
         $request->validate($this->validations, $this->validations_messages);
         $validatedData = $request->all();
+//        dd($validatedData)  ;
 
         // Salvare i dati nel database per gli apartment
         $newApartment = new apartment();

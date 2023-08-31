@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="index container mt-5">
+    <div class="index container-fluid mt-5">
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -22,7 +22,7 @@
             </div>
         @endif
 
-        <h1 class="mb-3">MY APARTMENT</h1>
+        <h1 class="mb-3">MY APARTMENTS</h1>
         <div class="d-flex gap-1 mb-4">
             <a class="btn btn-secondary" href="{{ route('admin.dashboard') }}">Back</a>
             <a class="btn btn-primary" href="{{ route('admin.apartments.create') }}">Add new Apartment</a>
@@ -62,7 +62,7 @@
                 <div class="modal fade" id="deleteModal-{{ $apartment->id }}" tabindex="-1"
                      aria-labelledby="deleteModalLabel"
                      aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="deleteModalLabel">Delete confirmation</h1>
