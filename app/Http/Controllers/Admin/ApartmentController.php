@@ -119,7 +119,9 @@ class ApartmentController extends Controller
             $newApartment->images()->createMany($images);
         }
 
-        return redirect()->route('admin.apartments.index', ['apartment' => $newApartment]);
+        return redirect()
+            ->route('admin.apartments.index', ['apartment' => $newApartment])
+            ->with('create_success', 'Apartment created successfully.');
     }
 
 
@@ -220,7 +222,7 @@ class ApartmentController extends Controller
         $apartment->images()->delete();
         $apartment->delete();
 
-        return redirect()->route('admin.apartments.index')->with('success', 'Apartment deleted successfully.');
+        return redirect()->route('admin.apartments.index')->with('delete_success', 'Apartment deleted successfully.');
     }
 
 
