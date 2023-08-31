@@ -80,10 +80,10 @@
 				<label>Services:</label><br>
 				<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
 					@foreach ($services as $service)
-						<div class="p-2 col d-flex justify-content-center">
-							<label class="checkbox-inline d-flex flex-row justify-content-start ms-checkbox-label">
+						<div class="form-check p-2 col d-flex justify-content-center">
+							<label class="checkbox-inline d-flex flex-row justify-content-start form-check-label">
 								<input type="checkbox" name="services[]" value="{{ $service['id'] }}"
-									class="h-100 d-flex align-items-center ms-custom-checkbox">
+									class="h-100 d-flex align-items-center form-check-input">
 								<span class="ms-3 ms-icon-wrap d-flex align-items-center">
 									<i style="color: #9153a9" class="fs-icon {{ $service['icon'] }}"></i>
 									<span class="ms-3 name">
@@ -92,6 +92,8 @@
 								</span>
 							</label>
 						</div>
+
+
 					@endforeach
 				</div>
 			</div>
