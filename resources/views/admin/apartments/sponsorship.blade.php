@@ -13,7 +13,7 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ $sponsorship->duration }}</h5>
-                            <h6 class="card-title">{{ $sponsorship->price }}€</h6>
+                            <h6 class="card-title mt-3 mb-3">{{ $sponsorship->price }}</h6>
                             <a href="#" class="btn btn-primary">Buy</a>
                         </div>
                     </div>
