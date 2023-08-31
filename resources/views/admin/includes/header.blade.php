@@ -73,9 +73,9 @@
 			</button>
 			<ul class="dropdown-menu dropdown-menu-end">
 				<li>
-					<div href="http://localhost:5174" class="dropdown-item">
+					<a class="dropdown-item" href="http://localhost:5174">
 						Home
-					</div>
+					</a>
 				</li>
 				<li>
 					<a class="dropdown-item w-100" href="{{ route('profile.edit') }}">Edit profile</a>
