@@ -22,6 +22,18 @@
             box-shadow: none; // Remove focus box shadow
         }
     }
+
+    .tt-search-box-result-list-container {
+        .tt-search-box-result-list {
+            &:first-child {
+                display: none;
+            }
+
+            &.suggestion {
+                display: none;
+            }
+        }
+    }
 }
 
 
