@@ -43,7 +43,7 @@
 	<nav>
 		<div class="myContainer">
 		<!-- logo -->
-		<a class="image" href="http://localhost:5173">
+		<a class="image" href="http://127.0.0.1:8000/admin">
 			<img
 				src="{{ asset('logo-orizzontale.png') }}"
 				alt="logo"
@@ -135,7 +135,7 @@
 							</button>
 						</li>
 						<li>
-							<button data-bs-dismiss="offcanvas" aria-label="Close" class="drop-item">	
+							<button data-bs-dismiss="offcanvas" aria-label="Close" class="drop-item">
 								<form action="{{ route('logout') }}" method="post">
 									@csrf
 									<button>Log out</button>
