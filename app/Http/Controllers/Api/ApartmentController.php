@@ -7,8 +7,10 @@ use App\Models\Apartment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class ApartmentController extends Controller {
-    public function index(Request $request): JsonResponse {
+class ApartmentController extends Controller
+{
+    public function index(Request $request): JsonResponse
+    {
         /*
          * sorting params -> order_direction = 'asc' / 'desc'
          *                   sort_by = 'sponsor' / 'availability'
@@ -31,7 +33,8 @@ class ApartmentController extends Controller {
         return response()->json($apartments);
     }
 
-    public function show($id): JsonResponse {
+    public function show($id): JsonResponse
+    {
         $apartment = Apartment::with(['user', 'address', 'services', 'images', 'messages', 'views', 'sponsorships'])
             ->find($id);
         if (!$apartment) {
@@ -42,7 +45,8 @@ class ApartmentController extends Controller {
 
     // END CRUDS
 
-    public function getAllOrderedByAvailability(): JsonResponse {
+    public function getAllOrderedByAvailability(): JsonResponse
+    {
         $apartments = Apartment::with(['user', 'address', 'services', 'images', 'views'])
             ->orderBy('is_available', 'desc')
             ->get();
@@ -50,7 +54,8 @@ class ApartmentController extends Controller {
         return response()->json($apartments);
     }
 
-    public function getAllOrderedBySponsorship(): JsonResponse {
+    public function getAllOrderedBySponsorship(): JsonResponse
+    {
         $apartments = Apartment::with(['user', 'address', 'services', 'images', 'views'])
             ->orderByDesc('is_sponsored')
             ->get();
@@ -58,7 +63,8 @@ class ApartmentController extends Controller {
         return response()->json($apartments);
     }
 
-    public function getImages($id): JsonResponse {
+    public function getImages($id): JsonResponse
+    {
         $images = Apartment::find($id)->images;
 
         if (!$images) {
@@ -68,7 +74,8 @@ class ApartmentController extends Controller {
         return response()->json($images);
     }
 
-    public function getServices($id): JsonResponse {
+    public function getServices($id): JsonResponse
+    {
         $services = Apartment::find($id)->services;
 
         if (!$services) {
@@ -78,7 +85,8 @@ class ApartmentController extends Controller {
         return response()->json($services);
     }
 
-    public function getViews($id): JsonResponse {
+    public function getViews($id): JsonResponse
+    {
         $views = Apartment::find($id)->views;
 
         if (!$views) {
@@ -88,7 +96,8 @@ class ApartmentController extends Controller {
         return response()->json($views);
     }
 
-    public function getMessages($id): JsonResponse {
+    public function getMessages($id): JsonResponse
+    {
         $apartment = Apartment::with('messages')->find($id);
 
         if (!$apartment) {
@@ -100,7 +109,8 @@ class ApartmentController extends Controller {
         return response()->json($messages);
     }
 
-    public function apartmentsInRadius(Request $request) {
+    public function apartmentsInRadius(Request $request)
+    {
         // Get latitude, longitude, and radius from the request parameters
         $latitude = $request->input('lat');
         $longitude = $request->input('lon');
@@ -112,7 +122,7 @@ class ApartmentController extends Controller {
                 "( $earthRadius * acos(
                 cos( radians($latitude) )
                 * cos( radians( addresses.latitude ) )
-                * cos( radians( addresses.longitude ) - radians(addresses.longitude) )
+                * cos( radians( addresses.longitude ) - radians($longitude) )
                 + sin( radians($latitude) )
                 * sin( radians( addresses.latitude ) )
             )) AS distance"
@@ -121,7 +131,7 @@ class ApartmentController extends Controller {
             ->whereRaw("( $earthRadius * acos(
                 cos( radians($latitude) )
                 * cos( radians( addresses.latitude ) )
-                * cos( radians( addresses.longitude ) - radians(addresses.longitude) )
+                * cos( radians( addresses.longitude ) - radians($longitude) )
                 + sin( radians($latitude) )
                 * sin( radians( addresses.latitude ) )
             )) <= ?", [$radius])
