@@ -42,6 +42,4 @@ Route::prefix('apartments')->group(function () {
     Route::get('/ordered-by-availability', [ApiApartmentController::class, 'getAllOrderedByAvailability']);
     //  retrieve apartments ordered by sponsor // http://127.0.0.1:8000/api/apartments/ordered-by-sponsorship
     Route::get('/ordered-by-sponsorship', [ApiApartmentController::class, 'getAllOrderedBySponsorship']);
-    //  retrieve apartments and services // http://127.0.0.1:8000/api/apartments/getAppServ
-    Route::get('/getAppServ', [ApiApartmentController::class, 'getAppServ']);
 });
