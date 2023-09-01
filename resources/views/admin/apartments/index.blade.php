@@ -1,7 +1,6 @@
 @extends('admin.layouts.base')
 
 @section('content')
-
     <div class="index container-fluid mt-5 w-75">
         @if (session('success'))
             <div class="alert alert-success">

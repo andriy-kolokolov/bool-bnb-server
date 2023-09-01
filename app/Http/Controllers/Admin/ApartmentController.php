@@ -41,8 +41,10 @@ class ApartmentController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $apartments = Apartment::where('user_id', $user->id)->with(['user', 'address'])->orderBy('is_sponsored', 'DESC')->get();
-
+        $apartments = Apartment::where('user_id', $user->id)
+            ->with(['user', 'address', 'services', 'images', 'views', 'sponsorships'])
+            ->orderBy('is_sponsored', 'DESC')
+            ->get();
         return view('admin.apartments.index', compact('apartments'));
     }
 
@@ -75,17 +77,16 @@ class ApartmentController extends Controller
 
         if ($validatedData['services']) {
             $services = array_values($validatedData['services']);
-
             $newApartment->services()->sync($services);
         }
 
-        // istanza per gli address
-
+        // Address
         $newAddress = new Address();
         $newAddress->street = $validatedData['street'];
         $newAddress->city = $validatedData['city'];
         $newAddress->zip = $validatedData['zip'];
-
+        $newAddress->latitude = $validatedData['latitude'];
+        $newAddress->longitude = $validatedData['longitude'];
         $newAddress->apartment()->associate($newApartment);
         $newAddress->save();
 
@@ -165,6 +166,8 @@ class ApartmentController extends Controller
             'street' => $validatedData['street'],
             'city' => $validatedData['city'],
             'zip' => $validatedData['zip'],
+            'latitude' => $validatedData['latitude'],
+            'longitude' => $validatedData['longitude'],
         ]);
 
         // Handle image updates

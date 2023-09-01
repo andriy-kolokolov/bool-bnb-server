@@ -33,6 +33,9 @@
 					<label for="address" id="address-label">Search Address: </label>
 					<!--    TOM TOM INPUT    -->
 				</div>
+                <!-- Hidden input fields for latitude and longitude -->
+                <input type="hidden" id="latitude" name="latitude">
+                <input type="hidden" id="longitude" name="longitude">
 			</div>
 
 			<div class="row mt-3">
