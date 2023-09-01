@@ -90,4 +90,11 @@ class ApartmentController extends Controller
 
         return response()->json($messages);
     }
+
+
+    public function getAppServ(): JsonResponse
+    {
+        $apartments = Apartment::with('services')->get();
+        return response()->json($apartments);
+    }
 }
