@@ -38,8 +38,8 @@ Route::prefix('apartments')->group(function () {
     Route::get('/{id}/views', [ApiApartmentController::class, 'getViews']);
     //  retrieve apartments images // http://127.0.0.1:8000/api/apartments/{id}/messages
     Route::get('/{id}/messages', [ApiApartmentController::class, 'getMessages']);
-    //  retrieve apartments ordered by availability // http://127.0.0.1:8000/api/apartments/ordered-by-availability
-    Route::get('/ordered-by-availability', [ApiApartmentController::class, 'getAllOrderedByAvailability']);
-    //  retrieve apartments ordered by sponsor // http://127.0.0.1:8000/api/apartments/ordered-by-sponsorship
-    Route::get('/ordered-by-sponsorship', [ApiApartmentController::class, 'getAllOrderedBySponsorship']);
+//    //  retrieve apartments ordered by availability // http://127.0.0.1:8000/api/apartments/ordered-by-availability
+//    Route::get('/ordered-by-availability', [ApiApartmentController::class, 'getAllOrderedByAvailability']);
+//    //  retrieve apartments ordered by sponsor // http://127.0.0.1:8000/api/apartments/ordered-by-sponsorship
+//    Route::get('/ordered-by-sponsorship', [ApiApartmentController::class, 'getAllOrderedBySponsorship']);
 });
