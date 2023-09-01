@@ -21,12 +21,12 @@ Route::prefix('apartments')->group(function () {
     Route::get('/', [ApiApartmentController::class, 'index']);
     //  retrieve apartment by id  http://127.0.0.1:8000/api/apartments/{id}
     Route::get('/{id}', [ApiApartmentController::class, 'show']);
-    //  add apartment // method POST http://127.0.0.1:8000/api/apartments/
-    Route::post('/', [ApiApartmentController::class, 'store']);
-    //  update apartment // method PUT http://127.0.0.1:8000/api/apartments/{id}
-    Route::put('/{id}', [ApiApartmentController::class, 'update']);
-    //  delete apartment // method DELETE http://127.0.0.1:8000/api/apartments/{id}
-    Route::delete('/{id}', [ApiApartmentController::class, 'destroy']);
+//    //  add apartment // method POST http://127.0.0.1:8000/api/apartments/
+//    Route::post('/', [ApiApartmentController::class, 'store']);
+//    //  update apartment // method PUT http://127.0.0.1:8000/api/apartments/{id}
+//    Route::put('/{id}', [ApiApartmentController::class, 'update']);
+//    //  delete apartment // method DELETE http://127.0.0.1:8000/api/apartments/{id}
+//    Route::delete('/{id}', [ApiApartmentController::class, 'destroy']);
 
 
 
@@ -38,8 +38,7 @@ Route::prefix('apartments')->group(function () {
     Route::get('/{id}/views', [ApiApartmentController::class, 'getViews']);
     //  retrieve apartments images // http://127.0.0.1:8000/api/apartments/{id}/messages
     Route::get('/{id}/messages', [ApiApartmentController::class, 'getMessages']);
-//    //  retrieve apartments ordered by availability // http://127.0.0.1:8000/api/apartments/ordered-by-availability
-//    Route::get('/ordered-by-availability', [ApiApartmentController::class, 'getAllOrderedByAvailability']);
-//    //  retrieve apartments ordered by sponsor // http://127.0.0.1:8000/api/apartments/ordered-by-sponsorship
-//    Route::get('/ordered-by-sponsorship', [ApiApartmentController::class, 'getAllOrderedBySponsorship']);
 });
+
+//  retrieve apartments in radius // http://127.0.0.1:8000/api/apartmentsInRadius // use params: lat,lon,radius
+Route::get('/apartments-in-radius', [ApiApartmentController::class, 'apartmentsInRadius']);

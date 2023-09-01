@@ -18,7 +18,7 @@ class ApartmentController extends Controller {
         $sortBy = $request->get('sort_by', 'sponsor'); // Default to sorting by sponsor if not specified
         $orderDirection = $request->get('order_direction', 'desc');
         $orderColumn = 'is_sponsored';
-//        $orderDirection = 'DESC';
+        //        $orderDirection = 'DESC';
         if ($sortBy === 'availability') {
             $orderColumn = 'is_available';
             //$orderDirection = 'DESC'; // Change to 'ASC' if you want availability in descending order
@@ -98,5 +98,36 @@ class ApartmentController extends Controller {
         $messages = $apartment->messages;
 
         return response()->json($messages);
+    }
+
+    public function apartmentsInRadius(Request $request) {
+        // Get latitude, longitude, and radius from the request parameters
+        $latitude = $request->input('lat');
+        $longitude = $request->input('lon');
+        $radius = $request->input('radius');
+
+        $earthRadius = 6371; // Earth's radius in kilometers
+        $apartments = Apartment::select('apartments.*')
+            ->selectRaw(
+                "( $earthRadius * acos(
+                cos( radians($latitude) )
+                * cos( radians( addresses.latitude ) )
+                * cos( radians( addresses.longitude ) - radians(addresses.longitude) )
+                + sin( radians($latitude) )
+                * sin( radians( addresses.latitude ) )
+            )) AS distance"
+            )
+            ->join('addresses', 'apartments.id', '=', 'addresses.apartment_id')
+            ->whereRaw("( $earthRadius * acos(
+                cos( radians($latitude) )
+                * cos( radians( addresses.latitude ) )
+                * cos( radians( addresses.longitude ) - radians(addresses.longitude) )
+                + sin( radians($latitude) )
+                * sin( radians( addresses.latitude ) )
+            )) <= ?", [$radius])
+            ->orderBy('distance')
+            ->with(['user', 'address', 'services', 'images', 'messages', 'views', 'sponsorships'])
+            ->get();
+        return response()->json($apartments);
     }
 }
