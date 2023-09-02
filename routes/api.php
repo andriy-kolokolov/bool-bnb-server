@@ -41,4 +41,4 @@ Route::prefix('apartments')->group(function () {
 });
 
 //  retrieve apartments in radius // http://127.0.0.1:8000/api/apartmentsInRadius // use params: lat,lon,radius
-Route::get('/apartments-in-radius', [ApiApartmentController::class, 'apartmentsInRadius']);
+Route::get('/search', [ApiApartmentController::class, 'search']);

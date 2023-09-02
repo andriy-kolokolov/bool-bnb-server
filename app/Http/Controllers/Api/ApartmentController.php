@@ -109,35 +109,72 @@ class ApartmentController extends Controller
         return response()->json($messages);
     }
 
-    public function apartmentsInRadius(Request $request)
-    {
+    public function search(Request $request): JsonResponse {
         // Get latitude, longitude, and radius from the request parameters
         $latitude = $request->input('lat');
         $longitude = $request->input('lon');
         $radius = $request->input('radius');
+        $minBeds = $request->input('min_beds');
+        $minRooms = $request->input('min_rooms');
+        $requiredServices = $request->input('required_services');
+        $apartments = $this->getApartmentsFiltered(
+            $latitude,
+            $longitude,
+            $radius,
+            $minBeds,
+            $minRooms,
+            $requiredServices
+        );
+        if (count($apartments) == 0) {
+            return response()->json(['apartments' => null], 200);
+        }
+        return response()->json(['apartments' => $apartments]);
+    }
 
+    public function getApartmentsFiltered(
+        $latitude,
+        $longitude,
+        $radius,
+        $minBeds = null,
+        $minRooms = null,
+        $requiredServices = []
+    ) {
         $earthRadius = 6371; // Earth's radius in kilometers
         $apartments = Apartment::select('apartments.*')
             ->selectRaw(
                 "( $earthRadius * acos(
-                cos( radians($latitude) )
-                * cos( radians( addresses.latitude ) )
-                * cos( radians( addresses.longitude ) - radians($longitude) )
-                + sin( radians($latitude) )
-                * sin( radians( addresses.latitude ) )
-            )) AS distance"
+            cos( radians($latitude) )
+            * cos( radians( addresses.latitude ) )
+            * cos( radians( addresses.longitude ) - radians($longitude) )
+            + sin( radians($latitude) )
+            * sin( radians( addresses.latitude ) )
+        )) AS distance"
             )
             ->join('addresses', 'apartments.id', '=', 'addresses.apartment_id')
             ->whereRaw("( $earthRadius * acos(
-                cos( radians($latitude) )
-                * cos( radians( addresses.latitude ) )
-                * cos( radians( addresses.longitude ) - radians($longitude) )
-                + sin( radians($latitude) )
-                * sin( radians( addresses.latitude ) )
-            )) <= ?", [$radius])
+            cos( radians($latitude) )
+            * cos( radians( addresses.latitude ) )
+            * cos( radians( addresses.longitude ) - radians($longitude) )
+            + sin( radians($latitude) )
+            * sin( radians( addresses.latitude ) )
+        )) <= ?", [$radius])
             ->orderBy('distance')
-            ->with(['user', 'address', 'services', 'images', 'messages', 'views', 'sponsorships'])
-            ->get();
-        return response()->json($apartments);
+            ->with(['user', 'address', 'services', 'images', 'messages', 'views', 'sponsorships']);
+
+        if ($minBeds !== null) {
+            $apartments->where('beds', '>=', $minBeds);
+        }
+
+        if ($minRooms !== null) {
+            $apartments->where('rooms', '>=', $minRooms);
+        }
+
+        if (!empty($requiredServices)) {
+            $apartments->whereHas('services', function ($query) use ($requiredServices) {
+                $query->whereIn('service_name', $requiredServices);
+            });
+        }
+        return $apartments->get();
     }
+
 }
