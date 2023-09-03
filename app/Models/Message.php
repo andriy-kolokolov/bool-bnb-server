@@ -9,10 +9,10 @@ class Message extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $fillable = ['user_id', 'message', 'email'];
+    protected $fillable = ['guest_name', 'guest_email', 'message'];
 
-    public function user()
+    public function apartment()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Apartment::class);
     }
 }
