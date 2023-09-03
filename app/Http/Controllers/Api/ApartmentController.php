@@ -9,10 +9,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Psy\Util\Json;
 
-class ApartmentController extends Controller
-{
-    public function index(Request $request): JsonResponse
-    {
+class ApartmentController extends Controller {
+    public function index(Request $request): JsonResponse {
         /*
          * sorting params -> order_direction = 'asc' / 'desc'
          *                   sort_by = 'sponsor' / 'availability'
@@ -35,8 +33,7 @@ class ApartmentController extends Controller
         return response()->json($apartments);
     }
 
-    public function show($id): JsonResponse
-    {
+    public function show($id): JsonResponse {
         $apartment = Apartment::with(['user', 'address', 'services', 'images', 'messages', 'views', 'sponsorships'])
             ->find($id);
         if (!$apartment) {
@@ -47,8 +44,7 @@ class ApartmentController extends Controller
 
     // END CRUDS
 
-    public function getAllOrderedByAvailability(): JsonResponse
-    {
+    public function getAllOrderedByAvailability(): JsonResponse {
         $apartments = Apartment::with(['user', 'address', 'services', 'images', 'views'])
             ->orderBy('is_available', 'desc')
             ->get();
@@ -56,8 +52,7 @@ class ApartmentController extends Controller
         return response()->json($apartments);
     }
 
-    public function getAllOrderedBySponsorship(): JsonResponse
-    {
+    public function getAllOrderedBySponsorship(): JsonResponse {
         $apartments = Apartment::with(['user', 'address', 'services', 'images', 'views'])
             ->orderByDesc('is_sponsored')
             ->get();
@@ -65,8 +60,7 @@ class ApartmentController extends Controller
         return response()->json($apartments);
     }
 
-    public function getImages($id): JsonResponse
-    {
+    public function getImages($id): JsonResponse {
         $images = Apartment::find($id)->images;
 
         if (!$images) {
@@ -76,8 +70,7 @@ class ApartmentController extends Controller
         return response()->json($images);
     }
 
-    public function getServices($id): JsonResponse
-    {
+    public function getServices($id): JsonResponse {
         $services = Apartment::find($id)->services;
 
         if (!$services) {
@@ -87,8 +80,7 @@ class ApartmentController extends Controller
         return response()->json($services);
     }
 
-    public function getViews($id): JsonResponse
-    {
+    public function getViews($id): JsonResponse {
         $views = Apartment::find($id)->views;
 
         if (!$views) {
@@ -98,8 +90,7 @@ class ApartmentController extends Controller
         return response()->json($views);
     }
 
-    public function getMessages($id): JsonResponse
-    {
+    public function getMessages($id): JsonResponse {
         $apartment = Apartment::with('messages')->find($id);
 
         if (!$apartment) {
@@ -111,9 +102,8 @@ class ApartmentController extends Controller
         return response()->json($messages);
     }
 
-    public function sendMessage(Request $request): JsonResponse
-    {
-        //                dd($request);
+    public function sendMessage(Request $request): JsonResponse {
+//                dd($request);
         $apartmentId = $request->input('apartment_id');
         $name = $request->input('guest_name');
         $email = $request->input('guest_email');
@@ -137,8 +127,7 @@ class ApartmentController extends Controller
         ], 200);
     }
 
-    public function search(Request $request): JsonResponse
-    {
+    public function search(Request $request): JsonResponse {
         // Get latitude, longitude, and radius from the request parameters
         $latitude = $request->input('lat');
         $longitude = $request->input('lon');
@@ -200,9 +189,10 @@ class ApartmentController extends Controller
 
         if (!empty($requiredServices)) {
             $apartments->whereHas('services', function ($query) use ($requiredServices) {
-                $query->whereIn('name', $requiredServices);
-            }, '=', count($requiredServices));
+                $query->whereIn('service_name', $requiredServices);
+            });
         }
         return $apartments->get();
     }
+
 }
