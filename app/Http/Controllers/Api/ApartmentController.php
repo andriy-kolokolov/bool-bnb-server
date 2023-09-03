@@ -11,15 +11,6 @@ use Psy\Util\Json;
 
 class ApartmentController extends Controller
 {
-<<<<<<< HEAD
-=======
-    private array $validations = [
-        'name' => 'required|string|max:200',
-        'rooms' => 'required|integer|min:1',
-        'beds' => 'required|integer|min:1',
-    ];
-
->>>>>>> 19a6b582cd9d6e192fdd827a0382d03363c34219
     public function index(Request $request): JsonResponse
     {
         /*
@@ -123,21 +114,6 @@ class ApartmentController extends Controller
     public function sendMessage(Request $request): JsonResponse
     {
         //                dd($request);
-<<<<<<< HEAD
-=======
-        $request->validate(
-            [
-                'email'     => 'required|email',
-                'message'   => 'required|text|min:10',
-            ],
-            // custom error message 
-            [
-                'email.required'    => 'Email required!',
-                'message.min'       => 'Message needs minimum 10 letter!',
-            ]
-        );
-
->>>>>>> 19a6b582cd9d6e192fdd827a0382d03363c34219
         $apartmentId = $request->input('apartment_id');
         $name = $request->input('guest_name');
         $email = $request->input('guest_email');
