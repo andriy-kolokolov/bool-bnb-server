@@ -113,7 +113,17 @@ class ApartmentController extends Controller
 
     public function sendMessage(Request $request): JsonResponse
     {
-        //                dd($request);
+        $request->validate(
+            [
+                'email'     => 'required|email',
+                'message'   => 'required|text|min:10',
+            ],
+            // custom error message 
+            [
+                'email.required'    => 'Email required!',
+                'message.min'       => 'Message needs minimum 10 letter!',
+            ]
+        );
         $apartmentId = $request->input('apartment_id');
         $name = $request->input('guest_name');
         $email = $request->input('guest_email');
