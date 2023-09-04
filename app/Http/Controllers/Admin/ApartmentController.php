@@ -43,7 +43,7 @@ class ApartmentController extends Controller
     {
         $user = Auth::user();
         $apartments = Apartment::where('user_id', $user->id)
-            ->with(['user', 'address', 'services', 'images', 'views', 'sponsorships'])
+            ->with(['user', 'address', 'services', 'images', 'messages', 'views', 'sponsorships'])
             ->orderBy('is_sponsored', 'DESC')
             ->get();
         return view('admin.apartments.index', compact('apartments'));
@@ -236,10 +236,9 @@ class ApartmentController extends Controller
         return view('admin.apartments.sponsorship', compact('sponsorships'));
     }
 
-    public function chat()
+    public function chat($id)
     {
-        $apartment = Auth::user();
-        $messages = Message::where('apartment_id', $apartment->id)->with('apartment')->get();
+        $messages = Message::where('apartment_id', $id)->get();
         return view('admin.apartments.chat', compact('messages'));
     }
 }

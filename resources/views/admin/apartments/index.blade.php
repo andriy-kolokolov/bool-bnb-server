@@ -49,7 +49,7 @@
                     <td>{!! $apartment->is_sponsored ? '<i style="color: green; font-size: 25px;" class="fa-solid fa-check ms-3 mt-1"></i>' : '<i style="color: red; font-size: 25px;"  class="fa-solid fa-xmark ms-3 mt-1"></i>' !!}</td>
                     <td style="width: 420px;">
                         <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
-                           href="{{ route('admin.apartments.chat', ['apartment' => $apartment]) }}">Messages</a>
+                           href="{{ route('admin.apartments.chat', ['id' => $apartment->id]) }}">Messages</a>
                         <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
                            href="{{ route('admin.apartments.show', ['apartment' => $apartment]) }}">Show</a>
                         <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
