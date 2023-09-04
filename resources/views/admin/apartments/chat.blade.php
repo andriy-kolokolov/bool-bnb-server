@@ -6,8 +6,7 @@
     @foreach($messages as $message)
       <div class="card" style="width: 18rem;">
         <div class="card-body">
-          <h4 class="card-title">{{ $message->guest_name }}</h5>
-          <h5 class="card-subtitle mb-2 text-body-secondary">{{ $message->guest_email }}</h6>
+          <h4 class="card-title">{{ $message->guest_email }}</h4>
           <p class="card-text">{{ $message->message }}</p>
         </div>
       </div>
