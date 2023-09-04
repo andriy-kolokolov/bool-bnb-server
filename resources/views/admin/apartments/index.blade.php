@@ -1,7 +1,7 @@
 @extends('admin.layouts.base')
 
 @section('content')
-    <div class="index container-fluid mt-5 w-75">
+    <div class="index d-flex flex-column justify-content-center container-fluid w-75 h-100">
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -21,17 +21,11 @@
             </div>
         @endif
 
-        <h1 class="mb-3">MY APARTMENTS</h1>
-        <div class="d-flex gap-1 mb-4">
-            <a class="btn btn-secondary" href="{{ route('admin.dashboard') }}"><i class="fa-solid fa-arrow-left-long"></i> Back</a>
-            <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;" href="{{ route('admin.apartments.create') }}"><i class="fa-solid fa-plus"></i> Add</a>
-        </div>
-
+        <h1 class="pb-4">MY APARTMENTS</h1>
 
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Address</th>
                 <th scope="col">Available</th>
@@ -42,9 +36,8 @@
             <tbody>
             @foreach($apartments as $apartment)
                 <tr>
-                    <th scope="row">{{ $apartment->id }}</th>
-                    <td>{{ $apartment->name }}</td>
-                    <td>{{ $apartment->address->street }} - {{ $apartment->address->zip }} {{ $apartment->address->city }}</td>
+                    <td><p class="mt-1 m-0">{{ $apartment->name }}</p></td>
+                    <td><p class="mt-1 m-0">{{ $apartment->address->street }} - {{ $apartment->address->zip }} {{ $apartment->address->city }}</p></td>
                     <td>{!! $apartment->is_available ? '<i style="color: green; font-size: 25px;" class="fa-solid fa-check ms-3 mt-1"></i>' : '<i style="color: red; font-size: 25px;"  class="fa-solid fa-xmark ms-3 mt-1"></i>' !!}</td>
                     <td>{!! $apartment->is_sponsored ? '<i style="color: green; font-size: 25px;" class="fa-solid fa-check ms-3 mt-1"></i>' : '<i style="color: red; font-size: 25px;"  class="fa-solid fa-xmark ms-3 mt-1"></i>' !!}</td>
                     <td style="width: 430px;">
@@ -97,6 +90,10 @@
             @endforeach
             </tbody>
         </table>
+            <div class="d-flex gap-2 pt-5">
+                <a class="btn btn-secondary" href="{{ route('admin.dashboard') }}"><i class="fa-solid fa-arrow-left-long"></i> Back</a>
+                <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;" href="{{ route('admin.apartments.create') }}"><i class="fa-solid fa-plus"></i> Add</a>
+            </div>
     </div>
 
 @endsection
