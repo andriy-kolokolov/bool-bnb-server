@@ -23,8 +23,8 @@
 
         <h1 class="mb-3">MY APARTMENTS</h1>
         <div class="d-flex gap-1 mb-4">
-            <a class="btn btn-secondary" href="{{ route('admin.dashboard') }}">Back</a>
-            <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;" href="{{ route('admin.apartments.create') }}">Add new Apartment</a>
+            <a class="btn btn-secondary" href="{{ route('admin.dashboard') }}"><i class="fa-solid fa-arrow-left-long"></i> Back</a>
+            <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;" href="{{ route('admin.apartments.create') }}"><i class="fa-solid fa-plus"></i> Add</a>
         </div>
 
 
@@ -47,20 +47,19 @@
                     <td>{{ $apartment->address->street }} - {{ $apartment->address->zip }} {{ $apartment->address->city }}</td>
                     <td>{!! $apartment->is_available ? '<i style="color: green; font-size: 25px;" class="fa-solid fa-check ms-3 mt-1"></i>' : '<i style="color: red; font-size: 25px;"  class="fa-solid fa-xmark ms-3 mt-1"></i>' !!}</td>
                     <td>{!! $apartment->is_sponsored ? '<i style="color: green; font-size: 25px;" class="fa-solid fa-check ms-3 mt-1"></i>' : '<i style="color: red; font-size: 25px;"  class="fa-solid fa-xmark ms-3 mt-1"></i>' !!}</td>
-                    <td style="width: 420px;">
+                    <td style="width: 430px;">
                         <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
-                           href="{{ route('admin.apartments.chat', ['id' => $apartment->id]) }}">Messages</a>
+                           href="{{ route('admin.apartments.show', ['apartment' => $apartment]) }}"><i class="fa-regular fa-eye"></i> Show</a>
                         <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
-                           href="{{ route('admin.apartments.show', ['apartment' => $apartment]) }}">Show</a>
+                           href="{{ route('admin.apartments.edit', ['apartment' => $apartment]) }}"><i class="fa-regular fa-pen-to-square"></i> Edit</a>
                         <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
-                           href="{{ route('admin.apartments.edit', ['apartment' => $apartment]) }}">Edit</a>
-                        <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
-                           href="{{ route('admin.apartments.sponsorship', ['apartment' => $apartment]) }}">Sponsor</a>
-
+                           href="{{ route('admin.apartments.chat', ['id' => $apartment->id]) }}"><i class="fa-solid fa-envelope"></i> Messages</a>
+                        <a class="btn myBtnPurple" style="background-color: #9153a9; color: white;"
+                           href="{{ route('admin.apartments.sponsorship', ['apartment' => $apartment]) }}"><i class="fa-solid fa-medal"></i> Sponsor</a>
                         <!-- Button delete -->
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                 data-bs-target="#deleteModal-{{ $apartment->id }}">
-                            Delete
+                            <i class="fa-solid fa-trash"></i>
                         </button>
                     </td>
                 </tr>
@@ -77,7 +76,7 @@
                                         aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                Are you sure you want to delete this apartment?
+                                Are you sure? It's going to be deleted permanently!
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
