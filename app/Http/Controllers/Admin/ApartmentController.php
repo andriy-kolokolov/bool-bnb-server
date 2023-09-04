@@ -5,14 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Models\View;
 use App\Models\Image;
 use App\Models\Address;
+use App\Models\Message;
 use App\Models\Service;
 use App\Models\Apartment;
 use App\Models\Sponsorship;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class ApartmentController extends Controller
 {
@@ -231,7 +232,14 @@ class ApartmentController extends Controller
 
     public function sponsorship()
     {
-        $sponsorships = sponsorship::all();
+        $sponsorships = Sponsorship::all();
         return view('admin.apartments.sponsorship', compact('sponsorships'));
+    }
+
+    public function chat()
+    {
+        $apartment = Auth::user();
+        $messages = Message::where('apartment_id', $apartment->id)->with('apartment')->get();
+        return view('admin.apartments.chat', compact('messages'));
     }
 }

@@ -25,6 +25,7 @@ Route::middleware(['auth', 'verified'])
     ->group(function () {
         Route::get('/',                         [AdminPageController::class, 'dashboard'])->name('dashboard');
         Route::get('/apartments/sponsorship',   [ApartmentController::class, 'sponsorship'])->name('apartments.sponsorship');
+        Route::get('/apartments/chat',          [ApartmentController::class, 'chat'])->name('apartments.chat');
         Route::resource('apartments', ApartmentController::class);
     });
 
