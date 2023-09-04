@@ -115,13 +115,8 @@ class ApartmentController extends Controller
     {
         $request->validate(
             [
-                'email'     => 'required|email',
-                'message'   => 'required|text|min:10',
-            ],
-            // custom error message 
-            [
-                'email.required'    => 'Email required!',
-                'message.min'       => 'Message needs minimum 10 letter!',
+                'guest_email'   => 'required|email',
+                'message'       => 'required|string|min:10',
             ]
         );
         $apartmentId = $request->input('apartment_id');
