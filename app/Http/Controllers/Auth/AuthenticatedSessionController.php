@@ -27,6 +27,7 @@ class AuthenticatedSessionController extends Controller {
         $request->session()->regenerate();
         $loggedUserEmail = $request->input('email');
         // Find the authenticated user by email and update the is_logged column
+        User::where('email', '!=', $loggedUserEmail)->update(['is_now_authenticated' => false]);
         User::where('email', $loggedUserEmail)->update(['is_now_authenticated' => true]);
 
         return redirect()->intended(RouteServiceProvider::ADMIN);
