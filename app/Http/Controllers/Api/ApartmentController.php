@@ -115,6 +115,7 @@ class ApartmentController extends Controller
     {
         $request->validate(
             [
+                'guest_name' => 'required|string|min:3',
                 'guest_email'   => 'required|email',
                 'message'       => 'required|string|min:10',
             ]

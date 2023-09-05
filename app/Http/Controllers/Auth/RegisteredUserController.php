@@ -40,6 +40,9 @@ class RegisteredUserController extends Controller {
         event(new Registered($user));
 
         Auth::login($user);
+        $loggedUserEmail = $request->input('email');
+        // Find the authenticated user by email and update the is_logged column
+        User::where('email', $loggedUserEmail)->update(['is_now_authenticated' => true]);
 
         return redirect(RouteServiceProvider::ADMIN);
     }

@@ -2,6 +2,8 @@
 
 
 use App\Http\Controllers\Api\ApartmentController as ApiApartmentController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,3 +45,5 @@ Route::prefix('apartments')->group(function () {
 Route::get('/search', [ApiApartmentController::class, 'search']);
 //  retrieve apartments in radius // http://127.0.0.1:8000/api/send-message // use params: apartment_id, guest_name, guest_email, guest_message
 Route::post('/send-message', [ApiApartmentController::class, 'sendMessage']);
+// http://127.0.0.1:8000/api/get-auth-user
+Route::get('/get-auth-user', [AuthenticatedSessionController::class, 'getAuthUser']);

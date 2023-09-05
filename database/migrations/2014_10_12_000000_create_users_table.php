@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('name')->nullable(false);
             $table->string('last_name')->nullable(false);
             $table->string('email')->unique();
+            $table->boolean('is_now_authenticated')->default(false);
             $table->date('birth_date')->nullable()->default(null);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable(false);
