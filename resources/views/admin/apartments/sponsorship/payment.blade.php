@@ -1,27 +1,20 @@
 @extends('admin.layouts.base')
 
-@vite(['resources/scss/payment-page.scss'])
+@vite(['resources/scss/payment-page.scss', 'resources/js/payment-page-script.js'])
 
 @section('content')
-
     <div class="container">
         <div id="dropin-container"></div>
-        <button id="submit-button" class="button button--small button--green">Purchase</button>
+        <button id="add-card-button" class="button button--small button--green">Add Card</button>
     </div>
 
-    <script src="https://js.braintreegateway.com/web/dropin/1.40.2/js/dropin.js"></script>
-    <script>
-        let button = document.querySelector('#submit-button');
+    <form id="payment-form" method="POST" action="{{ route('admin.processPayment', ['apartment' => $apartment]) }}">
+        @csrf
+        <input type="hidden" id="payment-method-nonce" name="payment_method_nonce">
+        <input id="payment-amount" name="payment_amount" value="{{ $paymentAmount }}">
+    </form>
 
-        braintree.dropin.create({
-            authorization: 'sandbox_g42y39zw_348pk9cgf3bgyw2b',
-            selector: '#dropin-container'
-        }, function (err, instance) {
-            button.addEventListener('click', function () {
-                instance.requestPaymentMethod(function (err, payload) {
-                    // Submit payload.nonce to your server
-                });
-            })
-        });
-    </script>
+    <button id="submit-payment-button" class="button button--small button--green">PAY</button>
+
+    <script src="https://js.braintreegateway.com/web/dropin/1.40.2/js/dropin.js"></script>
 @endsection

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\SponsorshipController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -29,7 +30,13 @@ Route::middleware(['auth', 'verified'])
         Route::resource('apartments', ApartmentController::class);
         Route::get('/apartments/{id}/sponsorship', [SponsorshipController::class, 'index'])
             ->name('apartments.sponsorship.index');
-    });
+        Route::post('apartments/{id}/sponsorship/payment', [SponsorshipController::class, 'payment'])
+            ->name('apartments.sponsorship.payment');
+        // Payment controller
+        Route::post('/apartments/{apartment}/sponsorship/payment/processPayment', [PaymentController::class, 'processPayment'])
+            ->name('processPayment');});
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
