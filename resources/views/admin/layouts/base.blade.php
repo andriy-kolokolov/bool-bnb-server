@@ -8,7 +8,9 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <style>
-
+            .ms-height-base {
+                min-height: calc(100vh - 120px)
+            }
         </style>
 
         <!-- Scripts -->
@@ -19,7 +21,7 @@
     @include('admin.includes.header')
 
     <main class="main-container ms-main">
-        <div class="container-fluid">
+        <div class="container-fluid ms-height-base">
             @yield('content')
         </div>
     </main>

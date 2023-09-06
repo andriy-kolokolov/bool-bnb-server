@@ -1,7 +1,7 @@
 @extends('admin.layouts.base')
 
 @section('content')
-    <div class="index d-flex flex-column justify-content-center container-fluid w-75 h-100 mt-3">
+    <div class="index d-flex flex-column justify-content-center container-fluid w-75 mt-3">
         @if(session('already_sponsored'))
             <div class="alert alert-warning fw-bold">
                 {{ session('already_sponsored') }}
