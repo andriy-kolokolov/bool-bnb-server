@@ -52,13 +52,7 @@
 			<img src="{{ asset('logo-b.png') }}" alt="logo-small" class="ms-small" />
 		</a>
 
-		<!-- search -->
-		<form class="search">
-			<input class="myInput" type="text" />
-			<button class="myBtn">
-				<i class="fa-solid fa-magnifying-glass"></i>
-			</button>
-		</form>
+
 
 		<!-- routes -->
 		<div class="routes btn-group">
