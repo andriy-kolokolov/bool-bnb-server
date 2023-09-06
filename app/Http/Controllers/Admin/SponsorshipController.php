@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class SponsorshipController extends Controller
 {
-    public function index() {
+    public function index($id) {
+        $apartment = Apartment::where('id', $id)
+            ->with('sponsorships')
+            ->first();
         $user = Auth::user();
-        $apartments = Apartment::where('user_id', $user->id)
-            ->with(['user', 'sponsorships'])
-            ->get();
-        $sponsorships = Sponsorship::all();
-        return view('admin.sponsorship.index', compact('sponsorships', 'apartments'));
+        $availableSponsorships = Sponsorship::all();
+        return view('admin.apartments.sponsorship.index', compact('availableSponsorships', 'user', 'apartment'));
     }
 }

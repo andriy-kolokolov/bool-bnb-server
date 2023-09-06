@@ -27,8 +27,8 @@ Route::middleware(['auth', 'verified'])
         Route::get('/', [AdminPageController::class, 'dashboard'])->name('dashboard');
         Route::get('/apartments/{id}/chat', [ApartmentController::class, 'chat'])->name('apartments.chat');
         Route::resource('apartments', ApartmentController::class);
-        Route::get('/sponsorship', [SponsorshipController::class, 'index'])
-            ->name('sponsorship.index');
+        Route::get('/apartments/{id}/sponsorship', [SponsorshipController::class, 'index'])
+            ->name('apartments.sponsorship.index');
     });
 
 Route::middleware('auth')->group(function () {

@@ -58,7 +58,7 @@
                             Messages
                         </a>
                         <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
-                           href="{{ route('admin.sponsorship.index', ['id' => $apartment->id]) }}">
+                           href="{{ route('admin.apartments.sponsorship.index', ['id' => $apartment->id]) }}">
                             <i class="fa-solid fa-medal"></i>
                             Sponsor
                         </a>
