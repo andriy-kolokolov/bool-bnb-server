@@ -13,14 +13,20 @@ class SponsorshipController extends Controller {
         $apartment = Apartment::where('id', $id)
             ->with('sponsorships')
             ->first();
+        // Check if the apartment is already sponsored
+        if ($apartment->is_sponsored) {
+            return redirect()->back()->with('already_sponsored', 'This apartment is already sponsored.');
+        }
         $user = Auth::user();
         $availableSponsorships = Sponsorship::all();
-        return view('admin.apartments.sponsorship.index', compact('availableSponsorships', 'user', 'apartment'));
+        return view('admin.apartments.sponsorship.index',
+            compact('availableSponsorships', 'user', 'apartment'));
     }
 
     public function payment(Request $request, $id) {
         // Retrieve the paymentAmount from the request
         $paymentAmount = $request->input('paymentAmount');
+        $selectedSponsorshipId = $request->input('selectedSponsorshipId');
         // Remove comma and Euro symbol, then convert to a float
         $paymentAmount = str_replace(',', '.', str_replace('€', '', $paymentAmount));
         $paymentAmount = floatval($paymentAmount);
@@ -30,6 +36,7 @@ class SponsorshipController extends Controller {
         $apartment = Apartment::where('id', $id)
             ->first();
         $user = Auth::user();
-        return view('admin.apartments.sponsorship.payment', compact('apartment', 'user', 'paymentAmount'));
+        return view('admin.apartments.sponsorship.payment',
+            compact('apartment', 'user', 'paymentAmount', 'selectedSponsorshipId'));
     }
 }

@@ -11,7 +11,8 @@
     <form id="payment-form" method="POST" action="{{ route('admin.processPayment', ['apartment' => $apartment]) }}">
         @csrf
         <input type="hidden" id="payment-method-nonce" name="payment_method_nonce">
-        <input id="payment-amount" name="payment_amount" value="{{ $paymentAmount }}">
+        <input type="hidden" id="payment-amount" name="payment_amount" value="{{ $paymentAmount }}">
+        <input type="hidden" id="selected-sponsorship" name="selected_sponsorship_id" value="{{ $selectedSponsorshipId }}">
     </form>
 
     <button id="submit-payment-button" class="button button--small button--green">PAY</button>

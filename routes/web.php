@@ -33,9 +33,9 @@ Route::middleware(['auth', 'verified'])
         Route::post('apartments/{id}/sponsorship/payment', [SponsorshipController::class, 'payment'])
             ->name('apartments.sponsorship.payment');
         // Payment controller
-        Route::post('/apartments/{apartment}/sponsorship/payment/processPayment', [PaymentController::class, 'processPayment'])
-            ->name('processPayment');});
-
+        Route::post('/apartments/{apartment}/sponsorship/payment/process-payment', [PaymentController::class, 'processPayment'])
+            ->name('processPayment');
+    });
 
 
 Route::middleware('auth')->group(function () {

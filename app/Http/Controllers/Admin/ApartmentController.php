@@ -229,13 +229,6 @@ class ApartmentController extends Controller
         return redirect()->route('admin.apartments.index')->with('delete_success', 'Apartment deleted successfully.');
     }
 
-
-    public function sponsorship()
-    {
-        $sponsorships = Sponsorship::all();
-        return view('admin.apartments.sponsorship', compact('sponsorships'));
-    }
-
     public function chat($id)
     {
         $messages = Message::where('apartment_id', $id)->get();

@@ -1,22 +1,28 @@
 @extends('admin.layouts.base')
 
 @section('content')
-    <div class="index d-flex flex-column justify-content-center container-fluid w-75 h-100">
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
+    <div class="index d-flex flex-column justify-content-center container-fluid w-75 h-100 mt-3">
+        @if(session('already_sponsored'))
+            <div class="alert alert-warning fw-bold">
+                {{ session('already_sponsored') }}
             </div>
         @endif
-        {{-- confirm delete --}}
+        @if (session('success'))
+            @php $apartment = session('apartment') @endphp
+            <div class="alert alert-success fw-bold">
+                {{ session('success') }}
+                {{ "Apartment - " . $apartment->name . " is sponsored until - " . $apartment->sponsorships->first()->pivot->end_date }}
+            </div>
+        @endif
         @if (session('delete_success'))
             @php $apartment = session('delete_success') @endphp
-            <div class="alert alert-danger m-0 mb-3">
+            <div class="alert alert-danger fw-bold">
                 {{ session('delete_success') }}
             </div>
         @endif
         @if (session('create_success'))
             @php $apartment = session('create_success') @endphp
-            <div class="alert alert-success m-0 mb-3">
+            <div class="alert alert-success fw-bold">
                 {{ session('create_success') }}
             </div>
         @endif
@@ -39,8 +45,16 @@
                     <td><p class="mt-1 m-0">{{ $apartment->name }}</p></td>
                     <td><p class="mt-1 m-0">{{ $apartment->address->street }}
                             - {{ $apartment->address->zip }} {{ $apartment->address->city }}</p></td>
-                    <td>{!! $apartment->is_available ? '<i style="color: green; font-size: 25px;" class="fa-solid fa-check ms-3 mt-1"></i>' : '<i style="color: red; font-size: 25px;"  class="fa-solid fa-xmark ms-3 mt-1"></i>' !!}</td>
-                    <td>{!! $apartment->is_sponsored ? '<i style="color: green; font-size: 25px;" class="fa-solid fa-check ms-3 mt-1"></i>' : '<i style="color: red; font-size: 25px;"  class="fa-solid fa-xmark ms-3 mt-1"></i>' !!}</td>
+                    <td>{!! $apartment->is_available ? '<i style="color: green; font-size: 25px;" class="fa-solid fa-check ms-3 mt-1"></i>' : '<i style="color: red; font-size: 25px;"  class="fa-solid fa-xmark ms-3 mt-1"></i>' !!}
+                    </td>
+                    <td>
+                        {!! $apartment->is_sponsored ? '<i style="color: green; font-size: 25px;" class="fa-solid fa-check ms-3 mt-1"></i>' : '<i style="color: red; font-size: 25px;"  class="fa-solid fa-xmark ms-3 mt-1"></i>' !!}
+                    </td>
+                    <td>
+                        @if ($apartment->is_sponsored)
+                            <p class="mt-1 m-0">Sponsored until - {{ $apartment->sponsorships->first()->pivot->end_date }}</p>
+                        @endif
+                    </td>
                     <td style="width: 430px;">
                         <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
                            href="{{ route('admin.apartments.show', ['apartment' => $apartment]) }}">

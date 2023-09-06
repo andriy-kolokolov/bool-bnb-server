@@ -18,17 +18,17 @@ class SponsorshipsTableSeeder extends Seeder
             [
                 'level'    => 'Basic',
                 'price'    => '2,99 €',
-                'duration' => '24 hours'
+                'duration' => '24'
             ],
             [
                 'level'    => 'Premium',
                 'price'    => '5,99 €',
-                'duration' => '72 hours'
+                'duration' => '72'
             ],
             [
                 'level'    => 'Deluxe',
                 'price'    => '9,99 €',
-                'duration' => '144 hours'
+                'duration' => '144'
             ],
         ];
 
