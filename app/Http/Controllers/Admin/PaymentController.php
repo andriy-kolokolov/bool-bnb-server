@@ -6,10 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Models\Sponsorship;
 use Braintree\Gateway;
+use DateInterval;
+use DateTime;
+use DateTimeZone;
+use Exception;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller {
 
+    /**
+     * @throws Exception
+     */
     public function processPayment(Request $request, Apartment $apartment) {
         $gateway = new Gateway([
             'environment' => 'sandbox',
@@ -29,9 +36,13 @@ class PaymentController extends Controller {
             $selectedSponsorshipId = $request->input('selected_sponsorship_id');
             $sponsorship = Sponsorship::find($selectedSponsorshipId);
             if ($sponsorship) {
+                $italyTimezone = new DateTimeZone('Europe/Rome');
+                $nowItaly = new DateTime('now', $italyTimezone);
+                $endDateItaly = clone $nowItaly;
+                $endDateItaly->add(new DateInterval('PT' . $sponsorship->duration . 'H'));
                 $apartment->sponsorships()->attach($selectedSponsorshipId, [
-                    'init_date' => now(), // Set the start date to the current date and time
-                    'end_date' => now()->addHours($sponsorship->duration), // Set the end date based on sponsorship duration
+                    'init_date' => $nowItaly->format('Y-m-d H:i:s'),
+                    'end_date' => $endDateItaly->format('Y-m-d H:i:s'),
                 ]);
                 $apartment->update(['is_sponsored' => true]);
                 return redirect()->route('admin.apartments.index')
