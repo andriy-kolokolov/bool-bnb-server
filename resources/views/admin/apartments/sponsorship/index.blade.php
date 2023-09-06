@@ -1,5 +1,13 @@
 @extends('admin.layouts.base')
+
 @section('content')
+
+    @if (session('payment_fail'))
+        <div class="alert alert-danger fw-bold">
+            {{ session('payment_fail') }}
+        </div>
+    @endif
+
     <div class="body">
         <h1 class="text-accent">pricing</h1>
 
@@ -21,7 +29,13 @@
 
                     <p class="space"></p>
 
-                    <a href="#" class="btn-sponsor">Buy Now</a>
+                    <form method="POST" action="{{ route('admin.apartments.sponsorship.payment', ['id' => $apartment->id]) }}">
+                        @csrf
+                        <input type="hidden" name="paymentAmount" value="{{ $sponsorship->price }}">
+                        <input type="hidden" name="selectedSponsorshipId" value="{{ $sponsorship->id }}">
+                        <button type="submit" class="btn-sponsor">Buy Now</button>
+                    </form>
+
                 </div>
                 
             @endforeach
