@@ -120,8 +120,7 @@
 			</tbody>
 		</table>
 		<div class="d-flex gap-2 pt-5">
-			<a class="btn btn-secondary" href="{{ route('admin.dashboard') }}"><i class="fa-solid fa-arrow-left-long"></i>
-				Back</a>
+			<a class="btn btn-secondary" href="{{ route('admin.dashboard') }}">Back</a>
 			<a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
 				href="{{ route('admin.apartments.create') }}"><i class="fa-solid fa-plus"></i> Add</a>
 		</div>

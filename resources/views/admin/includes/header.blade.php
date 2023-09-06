@@ -72,6 +72,9 @@
 					</a>
 				</li>
 				<li>
+					<a class="dropdown-item w-100" href="{{ route('admin.dashboard') }}">Dashboard</a>
+				</li>
+				<li>
 					<a class="dropdown-item w-100" href="{{ route('profile.edit') }}">Edit profile</a>
 				</li>
 				<li>
@@ -118,6 +121,13 @@
 							<button data-bs-dismiss="offcanvas" aria-label="Close" href="http://localhost:5174">
 								<div  class="drop-item">
 									Home
+								</div>
+							</button>
+						</li>
+						<li>
+							<button data-bs-dismiss="offcanvas" aria-label="Close" href="{{ route('admin.dashboard') }}">
+								<div  class="drop-item">
+									Dashboard
 								</div>
 							</button>
 						</li>
