@@ -23,7 +23,7 @@
 
                     <p class="space"></p>
 
-                    <p class="plan-price"><span>For {{ $sponsorship->duration }}</span>
+                    <p class="plan-price"><span>For {{ $sponsorship->duration }} Hours</span>
                     </p>
 
                     <p class="space"></p>
