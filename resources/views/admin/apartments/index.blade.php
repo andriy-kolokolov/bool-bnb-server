@@ -57,7 +57,7 @@
 						</td>
 						<td>
 							@if ($apartment->is_sponsored)
-								<p class="mt-1 m-0">
+								<p class="ms-badge mt-1 m-0">
 									{{ \Carbon\Carbon::parse($apartment->sponsorships->first()->pivot->end_date)->setTimezone('Europe/Rome')->format('d-m-Y - H:i:s') }}
 								</p>
 							@endif
