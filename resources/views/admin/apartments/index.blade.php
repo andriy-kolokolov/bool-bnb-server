@@ -14,6 +14,7 @@
                 {{ "Apartment - " . $apartment->name . " is sponsored until - " . $apartment->sponsorships->first()->pivot->end_date }}
             </div>
         @endif
+        {{-- confirm delete --}}
         @if (session('delete_success'))
             @php $apartment = session('delete_success') @endphp
             <div class="alert alert-danger fw-bold">
@@ -34,8 +35,8 @@
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Address</th>
-                <th scope="col">Available</th>
                 <th scope="col">Sponsor</th>
+                <th scope="col">Sponsored Until</th>
                 <th scope="col">Actions</th>
             </tr>
             </thead>
@@ -45,8 +46,6 @@
                     <td><p class="mt-1 m-0">{{ $apartment->name }}</p></td>
                     <td><p class="mt-1 m-0">{{ $apartment->address->street }}
                             - {{ $apartment->address->zip }} {{ $apartment->address->city }}</p></td>
-                    <td>{!! $apartment->is_available ? '<i style="color: green; font-size: 25px;" class="fa-solid fa-check ms-3 mt-1"></i>' : '<i style="color: red; font-size: 25px;"  class="fa-solid fa-xmark ms-3 mt-1"></i>' !!}
-                    </td>
                     <td>
                         {!! $apartment->is_sponsored ? '<i style="color: green; font-size: 25px;" class="fa-solid fa-check ms-3 mt-1"></i>' : '<i style="color: red; font-size: 25px;"  class="fa-solid fa-xmark ms-3 mt-1"></i>' !!}
                     </td>
@@ -71,7 +70,7 @@
                             <i class="fa-solid fa-envelope"></i>
                             Messages
                         </a>
-                        <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
+                        <a class="btn myBtnPurple" style="background-color: #9153a9; color: white;"
                            href="{{ route('admin.apartments.sponsorship.index', ['id' => $apartment->id]) }}">
                             <i class="fa-solid fa-medal"></i>
                             Sponsor
