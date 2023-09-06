@@ -1,9 +1,5 @@
 @extends('admin.layouts.base')
-@php
-    use App\Models\Apartment;
-    $apartmentId = request('apartment');
-    $apartment = Apartment::find($apartmentId);
-@endphp
+
 @section('content')
     <div class="container mt-3">
         <h2>Sponsorship for this Apartment</h2>
