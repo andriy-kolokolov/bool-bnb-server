@@ -9,6 +9,7 @@ use App\Models\Message;
 use App\Models\Service;
 use App\Models\Apartment;
 use App\Models\Sponsorship;
+use App\Providers\ApartmentService;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -39,6 +40,20 @@ class ApartmentController extends Controller
         'min' => ':attribute must be min :min',
     ];
 
+    public function updateSponsorshipStatus(Apartment $apartment)
+    {
+        $isSponsored = false;
+        foreach ($apartment->sponsorships as $sponsorship) {
+            if ($sponsorship->pivot->end_date >= now()) {
+                $isSponsored = true;
+            } else {
+                $apartment->sponsorships()->detach();
+            }
+            break;
+        }
+        $apartment->update(['is_sponsored' => $isSponsored]);
+    }
+
     public function index()
     {
         $user = Auth::user();
@@ -46,6 +61,9 @@ class ApartmentController extends Controller
             ->with(['user', 'address', 'services', 'images', 'messages', 'views', 'sponsorships'])
             ->orderBy('is_sponsored', 'DESC')
             ->get();
+        foreach ($apartments as $apartment) {
+            $this->updateSponsorshipStatus($apartment);
+        }
         return view('admin.apartments.index', compact('apartments'));
     }
 

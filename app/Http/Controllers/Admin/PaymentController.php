@@ -36,13 +36,9 @@ class PaymentController extends Controller {
             $selectedSponsorshipId = $request->input('selected_sponsorship_id');
             $sponsorship = Sponsorship::find($selectedSponsorshipId);
             if ($sponsorship) {
-                $italyTimezone = new DateTimeZone('Europe/Rome');
-                $nowItaly = new DateTime('now', $italyTimezone);
-                $endDateItaly = clone $nowItaly;
-                $endDateItaly->add(new DateInterval('PT' . $sponsorship->duration . 'H'));
                 $apartment->sponsorships()->attach($selectedSponsorshipId, [
-                    'init_date' => $nowItaly->format('Y-m-d H:i:s'),
-                    'end_date' => $endDateItaly->format('Y-m-d H:i:s'),
+                    'init_date' => now(), // Set the start date to the current date and time
+                    'end_date' => now()->addHours($sponsorship->duration), // Set the end date based on sponsorship duration
                 ]);
                 $apartment->update(['is_sponsored' => true]);
                 return redirect()->route('admin.apartments.index')
