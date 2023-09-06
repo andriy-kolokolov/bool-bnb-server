@@ -13,7 +13,8 @@ class ApartmentServiceTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run() {
+    public function run()
+    {
         $faker = Faker::create();
 
         $apartmentIds = DB::table('apartments')->pluck('id')->toArray();
@@ -21,7 +22,7 @@ class ApartmentServiceTableSeeder extends Seeder
 
         foreach ($apartmentIds as $apartmentId) {
             // Randomly select a few services to associate with each apartment
-            $numberOfServices = $faker->numberBetween(1, 5);
+            $numberOfServices = $faker->numberBetween(3, 7);
             $selectedServices = $faker->randomElements($serviceIds, $numberOfServices);
 
             foreach ($selectedServices as $serviceId) {
