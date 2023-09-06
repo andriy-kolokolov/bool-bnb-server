@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\SponsorshipController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
@@ -23,10 +24,11 @@ Route::middleware(['auth', 'verified'])
     ->name('admin.')
     ->prefix('admin')
     ->group(function () {
-        Route::get('/',                         [AdminPageController::class, 'dashboard'])->name('dashboard');
-        Route::get('/apartments/sponsorship',   [ApartmentController::class, 'sponsorship'])->name('apartments.sponsorship');
-        Route::get('/apartments/{id}/chat',          [ApartmentController::class, 'chat'])->name('apartments.chat');
+        Route::get('/', [AdminPageController::class, 'dashboard'])->name('dashboard');
+        Route::get('/apartments/{id}/chat', [ApartmentController::class, 'chat'])->name('apartments.chat');
         Route::resource('apartments', ApartmentController::class);
+        Route::get('/sponsorship', [SponsorshipController::class, 'index'])
+            ->name('sponsorship.index');
     });
 
 Route::middleware('auth')->group(function () {

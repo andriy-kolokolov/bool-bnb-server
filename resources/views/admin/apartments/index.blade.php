@@ -37,18 +37,30 @@
             @foreach($apartments as $apartment)
                 <tr>
                     <td><p class="mt-1 m-0">{{ $apartment->name }}</p></td>
-                    <td><p class="mt-1 m-0">{{ $apartment->address->street }} - {{ $apartment->address->zip }} {{ $apartment->address->city }}</p></td>
+                    <td><p class="mt-1 m-0">{{ $apartment->address->street }}
+                            - {{ $apartment->address->zip }} {{ $apartment->address->city }}</p></td>
                     <td>{!! $apartment->is_available ? '<i style="color: green; font-size: 25px;" class="fa-solid fa-check ms-3 mt-1"></i>' : '<i style="color: red; font-size: 25px;"  class="fa-solid fa-xmark ms-3 mt-1"></i>' !!}</td>
                     <td>{!! $apartment->is_sponsored ? '<i style="color: green; font-size: 25px;" class="fa-solid fa-check ms-3 mt-1"></i>' : '<i style="color: red; font-size: 25px;"  class="fa-solid fa-xmark ms-3 mt-1"></i>' !!}</td>
                     <td style="width: 430px;">
                         <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
-                           href="{{ route('admin.apartments.show', ['apartment' => $apartment]) }}"><i class="fa-regular fa-eye"></i> Show</a>
+                           href="{{ route('admin.apartments.show', ['apartment' => $apartment]) }}">
+                            <i class="fa-regular fa-eye"></i>
+                            Show
+                        </a>
                         <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
-                           href="{{ route('admin.apartments.edit', ['apartment' => $apartment]) }}"><i class="fa-regular fa-pen-to-square"></i> Edit</a>
+                           href="{{ route('admin.apartments.edit', ['apartment' => $apartment]) }}">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                            Edit
+                        </a>
                         <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
-                           href="{{ route('admin.apartments.chat', ['id' => $apartment->id]) }}"><i class="fa-solid fa-envelope"></i> Messages</a>
-                        <a class="btn myBtnPurple" style="background-color: #9153a9; color: white;"
-                           href="{{ route('admin.apartments.sponsorship', ['apartment' => $apartment]) }}"><i class="fa-solid fa-medal"></i> Sponsor</a>
+                           href="{{ route('admin.apartments.chat', ['id' => $apartment->id]) }}">
+                            <i class="fa-solid fa-envelope"></i>
+                            Messages
+                        </a>
+                        <a href="{{ route('admin.sponsorship.index', ['id' => $apartment->id]) }}">
+                            <i class="fa-solid fa-medal"></i>
+                            Sponsor
+                        </a>
                         <!-- Button delete -->
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                 data-bs-target="#deleteModal-{{ $apartment->id }}">
@@ -90,10 +102,12 @@
             @endforeach
             </tbody>
         </table>
-            <div class="d-flex gap-2 pt-5">
-                <a class="btn btn-secondary" href="{{ route('admin.dashboard') }}"><i class="fa-solid fa-arrow-left-long"></i> Back</a>
-                <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;" href="{{ route('admin.apartments.create') }}"><i class="fa-solid fa-plus"></i> Add</a>
-            </div>
+        <div class="d-flex gap-2 pt-5">
+            <a class="btn btn-secondary" href="{{ route('admin.dashboard') }}"><i
+                    class="fa-solid fa-arrow-left-long"></i> Back</a>
+            <a class="btn myBtnPurple" style="background-color: #485ba1; color: white;"
+               href="{{ route('admin.apartments.create') }}"><i class="fa-solid fa-plus"></i> Add</a>
+        </div>
     </div>
 
 @endsection
