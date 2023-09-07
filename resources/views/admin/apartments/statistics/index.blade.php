@@ -7,17 +7,20 @@
         <div class="col-sm-12 col-md-10 col-lg-8 col-xl-7 text-center">
             <h4 class="fw-bold">- {{ $apartment->name }} -</h4>
             <div class="row">
-                <div class="col-6 d-flex gap-3 justify-content-start align-items-center">
+                <div class="col-7 d-flex gap-3 justify-content-start align-items-center">
                     <div class="d-flex">
                         <a class="ms-back-button" href="{{ route('admin.apartments.index') }}"> Back</a>
                     </div>
-                    <h5 class="m-0 ms-title">Total apartment views:
+                    <div class="d-md-none ms-title">Views:
                         <span class="fw-bold">{{ $apartment->views->count() }}</span>
-                    </h5>
+                    </div>
+                    <div class="d-none d-md-block fs-6 ms-title"><span class="">Total apartment</span> views:
+                        <span class="fw-bold">{{ $apartment->views->count() }}</span>
+                    </div>
                 </div>
-                <div class="col-6 d-flex gap-2 justify-content-end align-items-center">
-                    <label class="fw-bold" for="chartTypeSelect">Select Chart:</label>
-                    <select id="chartTypeSelect" class="w-50 form-select">
+                <div class="col-5 d-flex gap-2 justify-content-end align-items-center">
+                    <label class="fw-bold" for="chartTypeSelect">Chart:</label>
+                    <select id="chartTypeSelect" class="form-select">
                         <option value="bar">Bar</option>
                         <option value="bubble">Bubble</option>
                         <option selected value="line">Line</option>
@@ -36,7 +39,7 @@
         let labels = {{ Js::from($labels) }};
         let apartmentViews = {{ Js::from($data) }};
         let apartmentTitle = {{ Js::from($apartment->name) }};
-        let graphicType = 'line';
+        let graphicType = 'bar';
 
 
         const data = {
@@ -53,6 +56,7 @@
             type: graphicType,
             data: data,
             options: {
+                responsive: true,
                 animations: {
                     tension: {
                         duration: 1000,
@@ -73,8 +77,11 @@
                     },
                 },
                 elements: {
+                    bar: {
+                       borderRadius: 7
+                    },
                     point: {
-                        hitRadius: 50,
+                        hitRadius: 30,
                         hoverRadius: 10,
                         radius: 5,
                         pointStyle: 'circle'
