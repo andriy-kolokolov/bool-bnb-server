@@ -16,11 +16,11 @@ class ViewsTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i = 1; $i <= 500; $i++) {
+        for ($i = 1; $i <= 2000; $i++) {
             View::create([
                 'apartment_id' => $faker->numberBetween(1, 30), // Assuming you have 30 apartments
                 'ip'           => $faker->ipv4,
-                'date'         => $faker->dateTimeThisMonth('now', 'Europe/Rome')->format('Y-m-d H:i:s'),
+                'date'         => $faker->dateTimeThisYear('now', 'Europe/Rome')->format('Y-m-d H:i:s'),
             ]);
         }
     }
