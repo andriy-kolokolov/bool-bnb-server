@@ -66,9 +66,9 @@
                     </td>
                     <!--    ACTIONS    -->
                     <td class="col text-center align-middle">
-                        <div class="row g-1
-                        row-cols-sm-2 row-cols-md-5 row-cols-lg-6 row-cols-xl-7
-                        justify-content-end justify-content-md-around align-items-center">
+                        <div class="row g-1 row-cols-sm-2 row-cols-md-5 row-cols-lg-6 row-cols-xl-8
+                        justify-content-end justify-content-md-between justify-content-xl-around align-items-center"
+                        >
                             <!--    EDIT    -->
                             <div class="col d-flex justify-content-center align-items-center">
                                 <a class="ms-action-button blue"
