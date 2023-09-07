@@ -8,11 +8,12 @@ $line-height-base: 1.6;
 /*****************************************
     COLORS
 *****************************************/
-$body-bg: #fafafa;
-$color-dark: #1e1e1e;
-$color-blue: #485ba1;
-$color-purple: #9153a9;
+$ms-body-bg: #fafafa;
+$ms-color-dark: #1e1e1e;
+$ms-color-blue: #485ba1;
+$ms-color-purple: #9153a9;
 $ms-color-light: #fafafa;
+$ms-color-danger: #fd0405;
 
 /*****************************************
     EFFECTS
@@ -36,3 +37,9 @@ $ms-border-radius-m: 15px;
 $ms-border-radius-l: 20px;
 
 $ms-scale-s: 1.05;
+
+/*****************************************
+    UI BUTTONS
+*****************************************/
+$ms-btn-border-s: 10px;
+$ms-btn-padding: 5px 15px;

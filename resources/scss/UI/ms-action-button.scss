@@ -1,0 +1,38 @@
+@use "../partials/ms-variables" as *;
+
+.ms-action-button {
+    outline: none;
+    border: 0;
+    border-radius: $ms-btn-border-s;
+    padding: $ms-btn-padding;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    width: fit-content;
+    transition: $ms-link-transition-s;
+
+    & > i:before {
+        display: flex;
+    }
+
+    &.purple {
+        background-color: $ms-color-purple;
+        color: $ms-color-light;
+    }
+
+    &.blue {
+        background-color: $ms-color-blue;
+        color: $ms-color-light;
+    }
+
+    &.danger {
+        background-color: $ms-color-danger;
+        color: $ms-color-light;
+    }
+
+    &:hover {
+        scale: 1.05;
+    }
+}

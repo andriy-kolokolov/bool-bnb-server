@@ -1,26 +1,28 @@
-// UI components
-@use "UI/ms-checkbox" as *;
-@use "UI/tt-address-input" as *;
-// Variables
+// PARTIALS
 @use "partials/ms-variables" as *;
+@use "partials/header" as *;
+@use "partials/footer" as *;
 
-// fontawesome
+// UI COMPONENTS
+@use "UI/ms-checkbox" as *;
+@use "UI/ms-action-button" as *;
+@use "UI/tt-address-input" as *;
+@use "UI/ms-sponsor-card" as *;
+@use "UI/ms-badge" as *;
+
+// VIEWS
+@use "views/messages.scss" as *;
+@use "views/payment-page.scss" as *;
+
+// FONTAWESOME
 $fa-font-path: "/node_modules/@fortawesome/fontawesome-free/webfonts";
 @import "node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
 @import "node_modules/@fortawesome/fontawesome-free/scss/solid";
 @import "node_modules/@fortawesome/fontawesome-free/scss/regular";
 @import "node_modules/@fortawesome/fontawesome-free/scss/brands";
 
-// Fonts
+// FONTS
 @import url("https://fonts.bunny.net/css?family=Nunito");
 
-// Bootstrap
+// BOOTSTRAP
 @import "~bootstrap/scss/bootstrap";
-
-// Altro Style
-@import "./partials/header.scss";
-@import "./partials/footer.scss";
-@import "./partials/messages.scss";
-@import "./partials/sponsor-card.scss";
-@import "./partials/apartments.scss";
-@import "./partials/payment-page.scss";
