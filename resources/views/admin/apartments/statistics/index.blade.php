@@ -40,7 +40,7 @@
         let apartmentViews = {{ Js::from($data) }};
         let apartmentTitle = {{ Js::from($apartment->name) }};
         let graphicType = 'bar';
-
+        let scaleY = {{ JS::from($apartment->views->count()) }} / 2;
 
         const data = {
             labels: labels,
@@ -68,7 +68,7 @@
                 },
                 scales: {
                     y: { // defining min and max so hiding the dataset does not change scale range
-                        min: 0,
+                        max: scaleY,
                     }
                 },
                 plugins: {
