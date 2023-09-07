@@ -1,3 +1,5 @@
+@use "ms-variables" as *;
+
 .body {
     font-family: "Roboto", sans-serif;
     text-align: center;
@@ -39,6 +41,7 @@
     border-radius: 1em;
     margin: 0 0.5em 1em;
     transition: transform 0.3s ease;
+    box-shadow: $ms-box-shadow-l;
 }
 
 .plan:hover {
