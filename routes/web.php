@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\SponsorshipController;
+use App\Http\Controllers\Admin\StatisticsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
@@ -35,6 +36,8 @@ Route::middleware(['auth', 'verified'])
         // Payment controller
         Route::post('/apartments/{apartment}/sponsorship/payment/process-payment', [PaymentController::class, 'processPayment'])
             ->name('processPayment');
+        Route::get('apartments/{id}/statistics', [StatisticsController::class, 'index'])
+            ->name('apartments.statistics');
     });
 
 
