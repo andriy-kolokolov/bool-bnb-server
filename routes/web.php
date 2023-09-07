@@ -29,13 +29,15 @@ Route::middleware(['auth', 'verified'])
         Route::get('/', [AdminPageController::class, 'dashboard'])->name('dashboard');
         Route::get('/apartments/{id}/chat', [ApartmentController::class, 'chat'])->name('apartments.chat');
         Route::resource('apartments', ApartmentController::class);
+        // Sponsorships Controller
         Route::get('/apartments/{id}/sponsorship', [SponsorshipController::class, 'index'])
             ->name('apartments.sponsorship.index');
         Route::post('apartments/{id}/sponsorship/payment', [SponsorshipController::class, 'payment'])
             ->name('apartments.sponsorship.payment');
-        // Payment controller
+        // Payment Controller
         Route::post('/apartments/{apartment}/sponsorship/payment/process-payment', [PaymentController::class, 'processPayment'])
             ->name('processPayment');
+        // Statistics Controller
         Route::get('apartments/{id}/statistics', [StatisticsController::class, 'index'])
             ->name('apartments.statistics');
     });

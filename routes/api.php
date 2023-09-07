@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Api\ApartmentController as ApiApartmentController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ViewController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,23 +23,18 @@ Route::prefix('apartments')->group(function () {
     // retrieve all apartments // http://127.0.0.1:8000/api/apartments/all
     Route::get('/', [ApiApartmentController::class, 'index']);
     //  retrieve apartment by id  http://127.0.0.1:8000/api/apartments/{id}
-    Route::get('/{id}', [ApiApartmentController::class, 'show']);
-    //    //  add apartment // method POST http://127.0.0.1:8000/api/apartments/
-    //    Route::post('/', [ApiApartmentController::class, 'store']);
-    //    //  update apartment // method PUT http://127.0.0.1:8000/api/apartments/{id}
-    //    Route::put('/{id}', [ApiApartmentController::class, 'update']);
-    //    //  delete apartment // method DELETE http://127.0.0.1:8000/api/apartments/{id}
-    //    Route::delete('/{id}', [ApiApartmentController::class, 'destroy']);
-
-
+    Route::get('{id}', [ApiApartmentController::class, 'show']);
     //  retrieve apartments images // http://127.0.0.1:8000/api/apartments/{id}/images
-    Route::get('/{id}/images', [ApiApartmentController::class, 'getImages']);
+    Route::get('{id}/images', [ApiApartmentController::class, 'getImages']);
     // retrieve all services related to apartment // http://127.0.0.1:8000/api/apartments/{id}/services
-    Route::get('/{id}/services', [ApiApartmentController::class, 'getServices']);
+    Route::get('{id}/services', [ApiApartmentController::class, 'getServices']);
     //  retrieve apartments views // http://127.0.0.1:8000/api/apartments/{id}/views
-    Route::get('/{id}/views', [ApiApartmentController::class, 'getViews']);
+    Route::get('{id}/views', [ApiApartmentController::class, 'getViews']);
     //  retrieve apartments images // http://127.0.0.1:8000/api/apartments/{id}/messages
-    Route::get('/{id}/messages', [ApiApartmentController::class, 'getMessages']);
+    Route::get('{id}/messages', [ApiApartmentController::class, 'getMessages']);
+    // Register view of an apartment in database // http://127.0.0.1:8000/api/apartments/{id}/register-apartment-view
+    Route::post('{id}/register-apartment-view', [ViewController::class, 'registerApartmentView']);
+
 });
 
 //  retrieve apartments in radius // http://127.0.0.1:8000/api/search // use params: lat,lon,radius
