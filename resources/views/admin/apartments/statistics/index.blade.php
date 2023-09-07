@@ -21,9 +21,9 @@
                 <div class="col-5 d-flex gap-2 justify-content-end align-items-center">
                     <label class="fw-bold" for="chartTypeSelect">Chart:</label>
                     <select id="chartTypeSelect" class="form-select">
-                        <option value="bar">Bar</option>
+                        <option selected value="bar">Bar</option>
                         <option value="bubble">Bubble</option>
-                        <option selected value="line">Line</option>
+                        <option value="line">Line</option>
                     </select>
                 </div>
             </div>
