@@ -3,28 +3,42 @@
 @vite(['resources/scss/views/statistics.scss'])
 
 @section('content')
+    {{--    @dd($labels);--}}
+    {{--    @dd($compactedData);--}}
     <div class="mt-4 row justify-content-center align-items-center">
         <div class="col-sm-12 col-md-10 col-lg-8 col-xl-7 text-center">
             <h4 class="fw-bold">- {{ $apartment->name }} -</h4>
-            <div class="row">
-                <div class="col-7 d-flex gap-3 justify-content-start align-items-center">
+            <div class="row g-3 row-cols-1 row-cols-sm-auto justify-content-between">
+                <div class="col d-flex gap-3 justify-content-start align-items-center">
                     <div class="d-flex">
                         <a class="ms-back-button" href="{{ route('admin.apartments.index') }}"> Back</a>
                     </div>
                     <div class="d-md-none ms-title">Views:
                         <span class="fw-bold">{{ $apartment->views->count() }}</span>
                     </div>
-                    <div class="d-none d-md-block fs-6 ms-title"><span class="">Total apartment</span> views:
+                    <div class="d-none d-md-block fs-6 ms-title text-nowrap"><span>Total </span> views:
                         <span class="fw-bold">{{ $apartment->views->count() }}</span>
                     </div>
                 </div>
-                <div class="col-5 d-flex gap-2 justify-content-end align-items-center">
-                    <label class="fw-bold" for="chartTypeSelect">Chart:</label>
-                    <select id="chartTypeSelect" class="form-select">
-                        <option selected value="bar">Bar</option>
-                        <option value="bubble">Bubble</option>
-                        <option value="line">Line</option>
-                    </select>
+                <div class="col d-flex justify-content-between">
+                    <div class="row row-cols-2">
+                        <div class="col d-flex gap-2 align-items-center">
+                            <label class="fw-bold" for="chartTypeSelect">Chart:</label>
+                            <select id="chartTypeSelect" class="form-select">
+                                <option selected value="bar">Bar</option>
+                                <option value="bubble">Bubble</option>
+                                <option value="line">Line</option>
+                            </select>
+                        </div>
+                        <div class="col d-flex gap-2 justify-content-end align-items-center">
+                            <label class="fw-bold" for="chartMonthSelect">Filter:</label>
+                            <select id="chartMonthSelect" class="form-select">
+                                @foreach($labels as $label)
+                                    <option value="{{ $label }}">{{ $label }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -35,12 +49,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript">
-
-        let labels = {{ Js::from($labels) }};
-        let apartmentViews = {{ Js::from($data) }};
         let apartmentTitle = {{ Js::from($apartment->name) }};
         let graphicType = 'bar';
-        let scaleY = {{ JS::from($apartment->views->count()) }} / 2;
+        let scaleY = {{ JS::from($apartment->views->count()) }};
+
+        // Create a copy of your original data
+        const originalLabels = {{ Js::from($labels) }};
+        const originalApartmentViews = {{ Js::from($data) }};
+
+        // Initialize the initial data for the chart
+        let labels = originalLabels;
+        let apartmentViews = originalApartmentViews;
 
         const data = {
             labels: labels,
@@ -56,37 +75,7 @@
             type: graphicType,
             data: data,
             options: {
-                responsive: true,
-                animations: {
-                    tension: {
-                        duration: 1000,
-                        easing: 'linear',
-                        from: 0.55,
-                        to: 0.5,
-                        loop: true
-                    }
-                },
-                scales: {
-                    y: { // defining min and max so hiding the dataset does not change scale range
-                        max: scaleY,
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: true,
-                    },
-                },
-                elements: {
-                    bar: {
-                       borderRadius: 7
-                    },
-                    point: {
-                        hitRadius: 30,
-                        hoverRadius: 10,
-                        radius: 5,
-                        pointStyle: 'circle'
-                    }
-                }
+                // ... (your existing chart options) ...
             }
         };
 
@@ -102,6 +91,27 @@
 
             // Update the chart's type property and redraw the chart
             myChart.config.type = graphicType;
+            myChart.update();
+        });
+
+        // Add an event listener to the select element with id "chartMonthSelect"
+        const chartMonthSelect = document.getElementById('chartMonthSelect');
+        chartMonthSelect.addEventListener('change', (event) => {
+            const selectedMonth = event.target.value;
+
+            // Filter the data based on the selected month
+            if (selectedMonth === 'all') {
+                labels = originalLabels;
+                apartmentViews = originalApartmentViews;
+            } else {
+                const monthIndex = originalLabels.indexOf(selectedMonth);
+                labels = [originalLabels[monthIndex]];
+                apartmentViews = [originalApartmentViews[monthIndex]];
+            }
+
+            // Update the chart's data and redraw the chart
+            myChart.data.labels = labels;
+            myChart.data.datasets[0].data = apartmentViews;
             myChart.update();
         });
 
