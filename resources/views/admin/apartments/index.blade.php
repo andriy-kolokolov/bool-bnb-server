@@ -37,7 +37,7 @@
                 <th scope="col" class="col text-center align-middle">Address</th>
                 <th scope="col" class="col text-center align-middle">Sponsor</th>
                 <th scope="col" class="col-2 text-center align-middle d-none d-xl-table-cell">Sponsored Until</th>
-                <th scope="col" class="col-md-4 col-lg-7 col-xl-6 col-xxl-5 text-center align-middle">Actions</th>
+                <th scope="col" class=" col-md-5 col-lg-4 text-center align-middle">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -66,15 +66,23 @@
                     </td>
                     <!--    ACTIONS    -->
                     <td class="col text-center align-middle">
-                        <div class="row g-1 row-cols-sm-2 row-cols-md-5 row-cols-lg-6 row-cols-xl-8
+                        <div class="row g-2 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-7
                         justify-content-end justify-content-md-between justify-content-xl-around align-items-center"
                         >
+                            <!--    SHOW    -->
+                            <div class="col d-flex justify-content-center align-items-center">
+                                <a class="ms-action-button blue"
+                                   href="{{ route('admin.apartments.show', ['apartment' => $apartment]) }}">
+                                    <i class="fa-regular fa-eye"></i>
+                                    <span class="d-none d-md-inline">Show</span>
+                                </a>
+                            </div>
                             <!--    EDIT    -->
                             <div class="col d-flex justify-content-center align-items-center">
                                 <a class="ms-action-button blue"
                                    href="{{ route('admin.apartments.edit', ['apartment' => $apartment]) }}">
                                     <i class="fa-regular fa-pen-to-square"></i>
-                                    <span class="d-none d-lg-inline">Edit</span>
+                                    <span class="d-none d-md-inline">Edit</span>
                                 </a>
                             </div>
                             <!--    MESSAGES    -->
@@ -82,7 +90,7 @@
                                 <a class="ms-action-button blue"
                                    href="{{ route('admin.apartments.chat', ['id' => $apartment->id]) }}">
                                     <i class="fa-solid fa-envelope"></i>
-                                    <span class="d-none d-lg-inline">Messages</span>
+                                    <span class="d-none d-md-inline">Messages</span>
                                 </a>
                             </div>
                             <!--    STATISTICS    -->
@@ -90,7 +98,7 @@
                                 <a class="ms-action-button blue"
                                    href="{{ route('admin.apartments.statistics', ['id' => $apartment->id]) }}">
                                     <i class="fa-solid fa-chart-line"></i>
-                                    <span class="d-none d-lg-inline">Statistics</span>
+                                    <span class="d-none d-md-inline">Statistics</span>
                                 </a>
                             </div>
                             <!--    SPONSOR    -->
@@ -98,7 +106,7 @@
                                 <a class="ms-action-button purple"
                                    href="{{ route('admin.apartments.sponsorship.index', ['id' => $apartment->id]) }}">
                                     <i class="fa-solid fa-medal"></i>
-                                    <span class="d-none d-lg-inline">Sponsor</span>
+                                    <span class="d-none d-md-inline">Sponsor</span>
                                 </a>
                             </div>
                             <!--    DELETE    -->
@@ -107,7 +115,7 @@
                                      data-bs-toggle="modal"
                                      data-bs-target="#deleteModal-{{ $apartment->id }}">
                                     <i class="fa-solid fa-trash"></i>
-                                    <span class="d-none d-lg-inline">Remove</span>
+                                    <span class="d-none d-md-inline">Remove</span>
                                 </div>
                             </div>
                         </div>
