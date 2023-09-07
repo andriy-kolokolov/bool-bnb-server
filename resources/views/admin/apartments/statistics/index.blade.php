@@ -7,8 +7,11 @@
         <div class="col-sm-12 col-md-10 col-lg-8 col-xl-7 text-center">
             <h4 class="fw-bold">- {{ $apartment->name }} -</h4>
             <div class="row">
-                <div class="col-6 d-flex justify-content-start align-items-center">
-                    <h5 class="ms-title">Total apartment views:
+                <div class="col-6 d-flex gap-3 justify-content-start align-items-center">
+                    <div class="d-flex">
+                        <a class="ms-back-button" href="{{ route('admin.apartments.index') }}"> Back</a>
+                    </div>
+                    <h5 class="m-0 ms-title">Total apartment views:
                         <span class="fw-bold">{{ $apartment->views->count() }}</span>
                     </h5>
                 </div>
@@ -17,7 +20,7 @@
                     <select id="chartTypeSelect" class="w-50 form-select">
                         <option value="bar">Bar</option>
                         <option value="bubble">Bubble</option>
-                        <option value="line">Line</option>
+                        <option selected value="line">Line</option>
                     </select>
                 </div>
             </div>
@@ -33,8 +36,7 @@
         let labels = {{ Js::from($labels) }};
         let apartmentViews = {{ Js::from($data) }};
         let apartmentTitle = {{ Js::from($apartment->name) }};
-        let thisYear = new Date().getFullYear();
-        let graphicType = 'bar';
+        let graphicType = 'line';
 
 
         const data = {
@@ -63,6 +65,19 @@
                 scales: {
                     y: { // defining min and max so hiding the dataset does not change scale range
                         min: 0,
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                    },
+                },
+                elements: {
+                    point: {
+                        hitRadius: 50,
+                        hoverRadius: 10,
+                        radius: 5,
+                        pointStyle: 'circle'
                     }
                 }
             }

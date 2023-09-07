@@ -1,8 +1,22 @@
 @use '../partials/ms-variables' as *;
 
 .ms-title {
-    background-color: $color-blue;
-    color: $ms-color-light;
-    padding: 5px 15px;
-    border-radius: 7px;
+  background-color: $color-blue;
+  color: $ms-color-light;
+  padding: 5px 15px;
+  border-radius: 7px;
+}
+
+.ms-back-button {
+  opacity: .9;
+  padding: 5px 15px;
+  border-radius: 7px;
+  background-color: $color-blue;
+  color: $ms-color-light;
+  transition: $ms-link-transition-s;
+  text-decoration: none;
+
+  &:hover {
+    opacity: 1;
+  }
 }
