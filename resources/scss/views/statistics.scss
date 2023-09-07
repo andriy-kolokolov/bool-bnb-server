@@ -1,0 +1,8 @@
+@use '../partials/ms-variables' as *;
+
+.ms-title {
+    background-color: $color-blue;
+    color: $ms-color-light;
+    padding: 5px 15px;
+    border-radius: 7px;
+}
