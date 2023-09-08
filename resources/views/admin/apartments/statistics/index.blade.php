@@ -3,8 +3,9 @@
 @vite(['resources/scss/views/statistics.scss'])
 
 @section('content')
-    {{--    @dd($labels);--}}
+    {{--        @dd($keys);--}}
     {{--    @dd($compactedData);--}}
+    {{--    @dd($data)--}}
     <div class="mt-4 row justify-content-center align-items-center">
         <div class="col-sm-12 col-md-10 col-lg-8 col-xl-7 text-center">
             <h4 class="fw-bold">- {{ $apartment->name }} -</h4>
@@ -33,8 +34,9 @@
                         <div class="col d-flex gap-2 justify-content-end align-items-center">
                             <label class="fw-bold" for="chartMonthSelect">Filter:</label>
                             <select id="chartMonthSelect" class="form-select">
-                                @foreach($labels as $label)
-                                    <option value="{{ $label }}">{{ $label }}</option>
+                                <option value="all">All</option>
+                                @foreach($monthsLabels as $month)
+                                    <option value="{{ $month }}">{{ $month }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -49,25 +51,44 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript">
-        let apartmentTitle = {{ Js::from($apartment->name) }};
-        let graphicType = 'bar';
-        let scaleY = {{ JS::from($apartment->views->count()) }};
+        let chartTitle = {{ Js::from($apartment->name) }};
+        let graphicType = 'bar'; // initial chart type
+        let maxMonthViews = {{ JS::from($maxMonthViews) }};
+        let scaleY = 10 * Math.ceil(maxMonthViews / 10) + 10;
 
-        // Create a copy of your original data
-        const originalLabels = {{ Js::from($labels) }};
-        const originalApartmentViews = {{ Js::from($data) }};
+        // Monthly
+        const monthsLabels = {{ Js::from($monthsLabels) }};
+        const monthValues = {{ Js::from($monthValues) }};
+        // Daily
+        const months = {{ JS::from($months) }};
+
+        function getKeys(monthIndex) {
+            let keys = Object.keys(months[monthIndex]);
+            // set readable label
+            for (let i = 0; i < keys.length; i++) {
+                keys[i] = 'Day ' + keys[i];
+            }
+            console.log(keys);
+            return keys;
+        }
+
+        function getValues(monthIndex) {
+            let values = Object.values(months[monthIndex]);
+            console.log(values);
+            return values;
+        }
 
         // Initialize the initial data for the chart
-        let labels = originalLabels;
-        let apartmentViews = originalApartmentViews;
+        let chartLabels = monthsLabels;
+        let chartValues = monthValues;
 
         const data = {
-            labels: labels,
+            labels: chartLabels,
             datasets: [{
                 label: 'Views',
                 backgroundColor: 'rgb(72,91,161)',
                 borderColor: 'rgb(72,91,161)',
-                data: apartmentViews,
+                data: chartValues,
             }]
         };
 
@@ -75,45 +96,77 @@
             type: graphicType,
             data: data,
             options: {
-                // ... (your existing chart options) ...
+                scales: {
+                    y: {
+                        min: 0,
+                        max: scaleY
+                    }
+                },
+                animations: {
+                    tension: {
+                        duration: 1000,
+                        easing: 'linear',
+                        from: 0.55,
+                        to: 0.5,
+                        loop: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                    },
+                },
+                elements: {
+                    bar: {
+                        borderRadius: 7
+                    },
+                    point: {
+                        hitRadius: 40,
+                        hoverRadius: 10,
+                        radius: 5,
+                        pointStyle: 'circle'
+                    }
+                }
             }
         };
 
+        // Init chart
         const myChart = new Chart(
             document.getElementById('myChart'),
             config
         );
-
-        // Add an event listener to the select element with id "chartTypeSelect"
         const chartTypeSelect = document.getElementById('chartTypeSelect');
-        chartTypeSelect.addEventListener('change', (event) => {
-            graphicType = event.target.value; // Get the selected chart type from the select element
+        const chartMonthSelect = document.getElementById('chartMonthSelect');
 
-            // Update the chart's type property and redraw the chart
+        // Filter event listeners
+        chartTypeSelect.addEventListener('change', (event) => {
+            graphicType = event.target.value;
             myChart.config.type = graphicType;
             myChart.update();
         });
-
-        // Add an event listener to the select element with id "chartMonthSelect"
-        const chartMonthSelect = document.getElementById('chartMonthSelect');
         chartMonthSelect.addEventListener('change', (event) => {
             const selectedMonth = event.target.value;
-
             // Filter the data based on the selected month
             if (selectedMonth === 'all') {
-                labels = originalLabels;
-                apartmentViews = originalApartmentViews;
+                // monthly chart
+                chartLabels = monthsLabels;
+                chartValues = monthValues;
+                // Update the chart's options with the new scaleY
+                scaleY = 10 * Math.ceil(maxMonthViews / 10) + 10;
+                myChart.options.scales.y.max = scaleY;
             } else {
-                const monthIndex = originalLabels.indexOf(selectedMonth);
-                labels = [originalLabels[monthIndex]];
-                apartmentViews = [originalApartmentViews[monthIndex]];
+                // daily chart
+                const monthIndex = monthsLabels.indexOf(selectedMonth);
+                chartLabels = getKeys(monthIndex);
+                chartValues = getValues(monthIndex);
+                // Update the chart's options with the new scaleY
+                scaleY = 10 * Math.ceil(Math.max(...chartValues) / 10);
+                myChart.options.scales.y.max = scaleY;
             }
-
             // Update the chart's data and redraw the chart
-            myChart.data.labels = labels;
-            myChart.data.datasets[0].data = apartmentViews;
+            myChart.data.labels = chartLabels;
+            myChart.data.datasets[0].data = chartValues;
             myChart.update();
         });
-
     </script>
 @endsection

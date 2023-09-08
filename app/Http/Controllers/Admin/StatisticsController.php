@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
+use App\Models\View;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class StatisticsController extends Controller {
@@ -18,66 +20,41 @@ class StatisticsController extends Controller {
             ->groupBy(DB::raw("MONTH(views.date)"), DB::raw("MONTHNAME(views.date)"))
             ->pluck('count', 'month_name');
 
-        $labels = $views->keys();
-        $data = $views->values();
+        $monthsLabels = $views->keys();
+        $monthValues = $views->values();
 
-        return view('admin.apartments.statistics.index', compact('apartment', 'labels', 'data'));
+        $months = $this->viewsByMonthAndDay($apartmentId)->values();
+
+        // Calculate the maximum month views
+        $maxMonthViews = $months->max(function ($collection) {
+            return $collection->flatten()->sum();
+        });
+
+        return view('admin.apartments.statistics.index',
+            compact('apartment', 'monthsLabels', 'monthValues', 'months', 'maxMonthViews'));
     }
-//    public function index(int $apartmentId)
-//    {
-//        $apartment = Apartment::findOrFail($apartmentId);
-//
-//        // Fetch daily view counts for the current year
-//        $views = Apartment::select(
-//            DB::raw("COUNT(*) as count"),
-//            DB::raw("MONTHNAME(views.date) as month_name"),
-//            DB::raw("DAY(views.date) as day")
-//        )
-//            ->where('apartment_id', $apartmentId)
-//            ->leftJoin('views', 'apartments.id', '=', 'views.apartment_id')
-//            ->whereYear('views.date', date('Y'))
-//            ->groupBy(DB::raw("MONTH(views.date)"), DB::raw("MONTHNAME(views.date)"), DB::raw("DAY(views.date)"))
-//            ->orderBy(DB::raw("MONTH(views.date)"), 'asc')
-//            ->orderBy(DB::raw("DAY(views.date)"), 'asc')
-//            ->get();
-//
-//        // Initialize an array to store daily data for each month
-//        $monthlyData = [];
-//
-//        // Initialize an array to store the labels (day of the month) for each month
-//        $labels = [];
-//
-//        // Loop through the results and organize data by month
-//        foreach ($views as $view) {
-//            $month = $view->month_name;
-//
-//            // If the month is not in the $monthlyData array, initialize it
-//            if (!isset($monthlyData[$month])) {
-//                $monthlyData[$month] = [];
-//            }
-//
-//            // Add the daily count to the corresponding month
-//            $monthlyData[$month][$view->day] = $view->count;
-//
-//            // If the labels for this month are not set, initialize them
-//            if (!isset($labels[$month])) {
-//                $labels[$month] = [];
-//            }
-//
-//            // Add the day of the month as a label for this month
-//            $labels[$month][] = $view->day;
-//        }
-//
-//        // Convert the data and labels to compacted arrays
-//        $compactedLabels = [];
-//        $compactedData = [];
-//
-//        foreach ($monthlyData as $month => $dailyCounts) {
-//            $compactedLabels[$month] = implode(', ', $labels[$month]);
-//            $compactedData[$month] = array_values($dailyCounts);
-//        }
-//
-//        return view('admin.apartments.statistics.index',
-//            compact('apartment', 'compactedLabels', 'compactedData'));
-//    }
+
+    public function viewsByMonthAndDay($apartmentId)
+    {
+        $views = DB::table('views')
+            ->where('apartment_id', $apartmentId)
+            ->selectRaw('YEAR(date) as year, MONTH(date) as month, DAY(date) as day, COUNT(*) as count')
+            ->groupBy(DB::raw('YEAR(date), MONTH(date), DAY(date)'))
+            ->get();
+        $viewsByMonthAndDay = collect([]);
+        foreach ($views as $view) {
+            $year = $view->year;
+            $month = $view->month;
+            $day = $view->day;
+            $count = $view->count;
+            $monthName = date('F', mktime(0, 0, 0, $month, 1, $year)); // Get month name from the numeric month
+            // Initialize the month data if it doesn't exist
+            if (!$viewsByMonthAndDay->has($monthName)) {
+                $viewsByMonthAndDay[$monthName] = collect([]);
+            }
+            // Add the daily views to the month's collection
+            $viewsByMonthAndDay[$monthName][$day] = $count;
+        }
+        return $viewsByMonthAndDay;
+    }
 }
