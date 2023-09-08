@@ -5,13 +5,14 @@
   color: $ms-color-light;
   padding: 5px 15px;
   border-radius: 7px;
+  cursor: default;
 }
 
 .ms-back-button {
   opacity: .9;
   padding: 5px 15px;
   border-radius: 7px;
-  background-color: $ms-color-blue;
+  background-color: #6c747c;
   color: $ms-color-light;
   transition: $ms-link-transition-s;
   text-decoration: none;
