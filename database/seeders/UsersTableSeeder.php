@@ -15,9 +15,9 @@ class UsersTableSeeder extends Seeder
     {
         $users = [
             [
-                'name'       => 'Admin',
-                'last_name'  => 'Admin',
-                'email'      => 'admin@gmail.com',
+                'name'       => 'Mario',
+                'last_name'  => 'Rossi',
+                'email'      => 'rossi@gmail.com',
                 'password'   => Hash::make('admin12345'),
                 'birth_date' => Carbon::createFromFormat('d/m/Y', '01/01/2023')->format('Y-m-d'),
             ],
