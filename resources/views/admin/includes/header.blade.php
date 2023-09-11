@@ -3,7 +3,7 @@
 @endphp
 
 <header>
-    <nav>
+    <nav class="shadow-lg">
         <div class="myContainer">
             <!-- logo -->
             <a class="image" href="{{route( 'admin.apartments.index')}}">
