@@ -6,7 +6,7 @@
     <nav class="shadow-lg">
         <div class="myContainer">
             <!-- logo -->
-            <a class="image" href="{{route( 'admin.apartments.index')}}">
+            <a class="image" href="http://localhost:5174/">
                 <img
                     src="{{ asset('logo-orizzontale.png') }}"
                     alt="logo"
